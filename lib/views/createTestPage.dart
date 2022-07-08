@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../views/microwidgets/appBarWidget.dart';
 import '../views/microwidgets/listOfCreatedTests.dart';
+import 'microwidgets/addTestMicro.dart';
 
 class CreateTestPage extends StatelessWidget {
   const CreateTestPage();
@@ -12,7 +13,8 @@ class CreateTestPage extends StatelessWidget {
         //shrinkWrap: true,
         children: [
           AppBarWidget(),
-          listOfCreatedTests()
+          listOfCreatedTests(),
+          addTestWidget()
           // ,
         ]);
   }

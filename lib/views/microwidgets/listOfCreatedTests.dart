@@ -25,7 +25,7 @@ class listOfCreatedTests extends StatelessWidget {
               children: [
                 // TestWidget(dummyTests[idx]['code'], dummyTests[idx]['name'],
                 //     dummyTests[idx]['id'], dummyTests[idx]['classes']),
-                TestAccordion(dummyTests[idx]['code'], dummyTests[idx]['name'],
+                TestWidget(dummyTests[idx]['code'], dummyTests[idx]['name'],
                     dummyTests[idx]['id'], dummyTests[idx]['classes']),
                 //Divider()
               ],
