@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'views/microwidgets/appBarWidget.dart';
 import 'views/createTestPage.dart';
+import 'views/testInfo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Scaffold(
+          backgroundColor: Colors.white,
           body: MyHomePage(),
         ));
   }
@@ -38,6 +40,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CreateTestPage();
+    return TestInfo();
   }
 }

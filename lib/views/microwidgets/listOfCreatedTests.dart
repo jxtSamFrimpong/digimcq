@@ -15,7 +15,7 @@ class listOfCreatedTests extends StatelessWidget {
       color: Colors.white,
       padding: EdgeInsets.all(8.0),
       margin: EdgeInsetsDirectional.all(12.0),
-      height: MediaQuery.of(context).size.height * 0.8,
+      //height: MediaQuery.of(context).size.height * 0.8,
       child: ListView.builder(
           //physics: ScrollPhysics(),
           shrinkWrap: true,
