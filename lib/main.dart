@@ -1,6 +1,7 @@
+import 'package:digimcq/views/testEDInfo.dart';
 import 'package:flutter/material.dart';
-import 'views/microwidgets/appBarWidget.dart';
 import 'views/createTestPage.dart';
+import 'views/testInfo.dart';
 import 'views/testInfo.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.grey,
         ),
         home: Scaffold(
           backgroundColor: Colors.white,
@@ -40,6 +41,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CreateTestPage();
+    return TestInfo();
   }
 }
