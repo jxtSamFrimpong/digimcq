@@ -14,7 +14,8 @@ class IndividualStudentInfo extends StatelessWidget {
             width: 200,
             child: Text('image place holder'),
             color: Colors.redAccent,
-          )
+          ),
+          Text('grade'),
         ]),
       ),
     );

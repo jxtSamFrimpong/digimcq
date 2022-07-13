@@ -4,7 +4,8 @@ import '../views/microwidgets/listOfCreatedTests.dart';
 import 'microwidgets/addTestMicro.dart';
 
 class CreateTestPage extends StatelessWidget {
-  const CreateTestPage();
+  CreateTestPage();
+  TextEditingController addtestcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +83,23 @@ class CreateTestPage extends StatelessWidget {
           //scrollDirection: Axis.vertical,
           //shrinkWrap: true,
           children: [
+            Row(
+              children: [
+                TextField(
+                  // onChanged: (e){
+
+                  // },
+                  controller: addtestcontroller,
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    //TODO do some checks add test to firebase
+                    addtestcontroller.clear();
+                  },
+                  child: Center(child: Text('+ ADD')),
+                )
+              ],
+            ),
             Expanded(child: listOfCreatedTests()),
             addTestWidget()
             // ,
