@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 
 class addTestWidget extends StatelessWidget {
-  const addTestWidget({Key? key}) : super(key: key);
+  addTestWidget({Key? key}) : super(key: key);
+  TextEditingController addtestcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 50.0,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-              child: MaterialButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Add Test',
-                    style: TextStyle(color: Colors.black),
-                  ))),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextField(
+          // onChanged: (e){
+
+          // },
+          controller: addtestcontroller,
         ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-        ));
+        MaterialButton(
+          onPressed: () {
+            //TODO do some checks add test to firebase
+            addtestcontroller.clear();
+          },
+          child: Center(child: Text('+ ADD')),
+        )
+      ],
+    );
   }
 }

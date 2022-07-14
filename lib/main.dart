@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
           'home': (context) => MyHomePage(),
           'camera': (context) => CameraApp(),
           'test_info': (context) => TestInfo(),
-          'student_summeary': (context) => StudentsSummary()
+          'student_summeary': (context) => StudentsSummary(),
+          'individual': (context) => IndividualStudentInfo()
         },
         theme: ThemeData(
           // This is the theme of your application.
@@ -45,10 +46,6 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.grey,
-        ),
-        home: Scaffold(
-          backgroundColor: Colors.white,
-          body: MyHomePage(),
         ));
   }
 }
@@ -58,7 +55,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CreateTestPage();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: CreateTestPage(),
+    );
   }
 }
 

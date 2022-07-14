@@ -20,15 +20,8 @@ class listOfCreatedTests extends StatelessWidget {
           shrinkWrap: true,
           itemCount: dummyTests.length,
           itemBuilder: (BuildContext ctx, int idx) {
-            return Column(
-              children: [
-                // TestWidget(dummyTests[idx]['code'], dummyTests[idx]['name'],
-                //     dummyTests[idx]['id'], dummyTests[idx]['classes']),
-                TestWidget(dummyTests[idx]['code'], dummyTests[idx]['name'],
-                    dummyTests[idx]['id'], dummyTests[idx]['classes']),
-                //Divider()
-              ],
-            );
+            return TestWidget(dummyTests[idx]['code'], dummyTests[idx]['name'],
+                dummyTests[idx]['id'], dummyTests[idx]['classes']);
           }),
     );
     //ListView(
@@ -49,6 +42,7 @@ class TestWidget extends ListTile {
   String _coursecode;
   String _testId;
   num _numClasses;
+  num _id = 0;
 
   TestWidget(
       this._coursecode, this._coursename, this._testId, this._numClasses);
@@ -57,6 +51,9 @@ class TestWidget extends ListTile {
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return ListTile(
+      onTap: () {
+        Navigator.pushNamed(context, 'test_info');
+      },
       title: Text(this._coursename),
       subtitle: Text(this._coursecode), //TODO: string parse
     );

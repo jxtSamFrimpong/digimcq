@@ -13,24 +13,16 @@ class StudentsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Center(
-            child: Text('Students Summary'),
-          ),
-          Expanded(
-            child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: 20,
-                itemBuilder: ((context, index) {
-                  return ListTile(
-                    title: Text('Student $index'),
-                  );
-                })),
-          )
-        ],
-      ),
-    );
+    return ListView.separated(
+        separatorBuilder: (context, index) => Divider(),
+        itemCount: 20,
+        itemBuilder: ((context, index) {
+          return ListTile(
+            title: Text('Student $index'),
+            onTap: () {
+              Navigator.pushNamed(context, 'individual');
+            },
+          );
+        }));
   }
 }

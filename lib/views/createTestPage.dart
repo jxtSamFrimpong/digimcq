@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../views/microwidgets/appBarWidget.dart';
 import '../views/microwidgets/listOfCreatedTests.dart';
 import 'microwidgets/addTestMicro.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class CreateTestPage extends StatelessWidget {
   CreateTestPage();
@@ -82,26 +83,29 @@ class CreateTestPage extends StatelessWidget {
       body: Column(
           //scrollDirection: Axis.vertical,
           //shrinkWrap: true,
+          //mainAxisSize: MainAxisSize.max,
           children: [
+            Expanded(child: listOfCreatedTests()),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextField(
-                  // onChanged: (e){
-
-                  // },
-                  controller: addtestcontroller,
+                SizedBox(
+                  width: 200.0,
+                  child: TextField(
+                    controller: addtestcontroller,
+                  ),
                 ),
                 MaterialButton(
                   onPressed: () {
                     //TODO do some checks add test to firebase
                     addtestcontroller.clear();
+                    Future.delayed(Duration(seconds: 3));
+                    Navigator.pushNamed(context, 'test_info');
                   },
                   child: Center(child: Text('+ ADD')),
                 )
               ],
-            ),
-            Expanded(child: listOfCreatedTests()),
-            addTestWidget()
+            )
             // ,
           ]),
     );
