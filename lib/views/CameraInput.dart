@@ -1,18 +1,9 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:camera/camera.dart';
 
-late List<CameraDescription> _cameras;
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  _cameras = await availableCameras();
-  runApp(const CameraApp());
-}
-
-/// CameraApp is the Main Application.
 class CameraApp extends StatefulWidget {
-  /// Default Constructor
   const CameraApp({Key? key}) : super(key: key);
 
   @override
@@ -20,44 +11,44 @@ class CameraApp extends StatefulWidget {
 }
 
 class _CameraAppState extends State<CameraApp> {
-  late CameraController controller;
 
-  @override
-  void initState() {
-    super.initState();
-    controller = CameraController(_cameras[0], ResolutionPreset.max);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    }).catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            print('User denied camera access.');
-            break;
-          default:
-            print('Handle other errors.');
-            break;
-        }
-      }
-    });
+  get availCameras async {
+    try {
+      cameras = await availableCameras();
+      return cameras;
+    } on CameraException catch (e) {
+      print('Error in fetching the cameras: $e');
+    }
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  List<CameraDescription> cameras = [];
+  cameras = availCameras;
+  
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return Container();
-    }
-    return MaterialApp(
-      home: CameraPreview(controller),
-    );
+    return Container();
+  }
+}
+
+/// Returns a suitable camera icon for [direction].
+IconData getCameraLensIcon(CameraLensDirection direction) {
+  switch (direction) {
+    case CameraLensDirection.back:
+      return Icons.camera_rear;
+    case CameraLensDirection.front:
+      return Icons.camera_front;
+    case CameraLensDirection.external:
+      return Icons.camera;
+    default:
+      throw ArgumentError('Unknown lens direction');
+  }
+}
+
+void _logError(String code, String? message) {
+  if (message != null) {
+    print('Error: $code\nError Message: $message');
+  } else {
+    print('Error: $code');
   }
 }

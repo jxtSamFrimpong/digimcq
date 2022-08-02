@@ -1,22 +1,44 @@
-from itertools import permutations
+def solution(args):
+    # your code here
+    #print(args)
+    args = sorted(args)
+    #print(args)
 
-def next_bigger(number):
-    str_rep = str(number)
-    str_int_rep = [int(i) for i in str_rep]
+    argy = []
     
-    for idx, j in reversed(list(enumerate(str_int_rep))):
-        
-        if idx!=len(str_rep)-1:
-            if str_int_rep[idx]<str_int_rep[idx+1]:
-                tul = []
-                for _ in list(permutations(str_rep[idx:])):
-                    
-                    if int(''.join([i for i in _]))>int(str_rep[idx:]):
-                        tul.append(int(''.join([i for i in _])))
-                
-                minPatch = str(min(tul))
-                return int(str_rep[:idx]+minPatch)
+    temp = []
+    tempCheck = 0
+    #print(sorted(args))
+    for idx, el in enumerate(args):
+        if idx==0:
+            temp.append(el)
+        else:
+            if el-args[idx-1]==1:
+                temp.append(el)
+                if idx == (len(args)-1):
+                    argy.append(temp)
+                    break
+            else:
+                argy.append(temp)
+                #print(temp)
+                temp = []
+                temp.append(el)
+                if idx == (len(args)-1):
+                    argy.append(temp)
+                    break
 
-    return -1
-
-print(next_bigger(5))
+    resArr = []
+    #print(args)
+    #print(argy)
+    for i in argy:
+        if len(i)>2:
+            beg = str(i[0]) +'-'+ str(i[-1])
+            resArr.append(beg)
+        elif len(i)==2:
+            resArr.append(str(i[0]))
+            resArr.append(str(i[1]))
+        else:
+            resArr.append(str(i[0]))
+    return ','.join(resArr)
+            
+print(solution([-6,-3,-2,-1,0,1,3,4,5,7,8,9,10,11,14,15,17,18,19,20]))
