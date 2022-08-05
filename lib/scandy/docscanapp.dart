@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:document_scanner/document_scanner.dart';
+//import 'package:document_scanner/document_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DocScanApp extends StatefulWidget {
