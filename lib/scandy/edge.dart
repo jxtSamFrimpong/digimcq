@@ -79,7 +79,7 @@ class _EdgeAppState extends State<EdgeApp> {
                 ),
               ),
             ],
-          ),
+          ), 
         ),
       ),
     );

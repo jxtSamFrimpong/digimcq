@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "604397227822",
+    "project_id": "digimcq",
+    "storage_bucket": "digimcq.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604397227822:android:269394b07a95051ba334bf",
+        "android_client_info": {
+          "package_name": "com.example.digimcq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604397227822-lakakluuce0jj0l4qucq6gscdhr22f0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChZWUiJ2TSu2lXEaBFiV6u9VhElnvm2yU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604397227822-lakakluuce0jj0l4qucq6gscdhr22f0i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

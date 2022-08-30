@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import '../../dummyData/testCreated.dart' as dummies;
-//import 'package:getwidget/getwidget.dart';
 
 class listOfCreatedTests extends StatelessWidget {
+  final Stream<QuerySnapshot> _testsStream =
+      FirebaseFirestore.instance.collection('tests').snapshots();
+
   listOfCreatedTests({Key? key}) : super(key: key);
 
   List dummyTests = dummies.Tests;
@@ -10,29 +14,47 @@ class listOfCreatedTests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.all(8.0),
-      margin: EdgeInsetsDirectional.all(12.0),
-      //height: MediaQuery.of(context).size.height * 0.8,
-      child: ListView.builder(
-          //physics: ScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: dummyTests.length,
-          itemBuilder: (BuildContext ctx, int idx) {
-            return TestWidget(dummyTests[idx]['code'], dummyTests[idx]['name'],
-                dummyTests[idx]['id'], dummyTests[idx]['classes']);
-          }),
-    );
-    //ListView(
-    // scrollDirection: Axis.vertical,
-    //height: MediaQuery.of(context).size.height*0.7,
-    // child:  shrinkWrap: true,
-    //   children: [
-    //     TestWidget('COE 419', 'Konkonsa', '315335', 4),
-    //     TestWidget('COE 357', 'Linear Electronics', '244314', 6)
-    //   ],
+    // return Container(
+    //   color: Colors.white,
+    //   padding: EdgeInsets.all(8.0),
+    //   margin: EdgeInsetsDirectional.all(12.0),
+    //   //height: MediaQuery.of(context).size.height * 0.8,
+    //   child: ListView.builder(
+    //     //physics: ScrollPhysics(),
+    //     shrinkWrap: true,
+    //     itemCount: dummyTests.length,
+    //     itemBuilder: (BuildContext ctx, int idx) {
+    //       return TestWidget(dummyTests[idx]['code'], dummyTests[idx]['name'],
+    //           dummyTests[idx]['id'], dummyTests[idx]['classes']);
+    //     },
+    //   ),
     // );
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: _testsStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text("Loading");
+        }
+        return ListView(
+          shrinkWrap: true,
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            return TestWidget(
+                data['course_code'], data['name'], data['class_']);
+            // return ListTile(
+            //   title: Text(data['name']),
+            //   subtitle: Text(data['description']),
+            //   trailing: Text(data['class_']),
+            // );
+          }).toList(),
+        );
+      },
+    );
   }
 }
 
@@ -40,12 +62,11 @@ class TestWidget extends ListTile {
   //TODO: better fields along
   String _coursename;
   String _coursecode;
-  String _testId;
-  num _numClasses;
-  num _id = 0;
+  //String _testId;
+  String _class;
+  //num _id = 0;
 
-  TestWidget(
-      this._coursecode, this._coursename, this._testId, this._numClasses);
+  TestWidget(this._coursecode, this._coursename, this._class);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +76,8 @@ class TestWidget extends ListTile {
         Navigator.pushNamed(context, 'test_info');
       },
       title: Text(this._coursename),
-      subtitle: Text(this._coursecode), //TODO: string parse
+      subtitle: Text(this._coursecode),
+      trailing: Text(this._class), //TODO: string parse
     );
   }
 }
@@ -63,17 +85,15 @@ class TestWidget extends ListTile {
 class TestAccordion extends StatelessWidget {
   String _coursename;
   String _coursecode;
-  String _testId;
-  num _numClasses;
+  //String _testId;
+  String _class;
 
-  TestAccordion(
-      this._coursecode, this._coursename, this._testId, this._numClasses);
+  TestAccordion(this._coursecode, this._coursename, this._class);
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: TestWidget(
-          this._coursecode, this._coursename, this._testId, this._numClasses),
+      title: TestWidget(this._coursecode, this._coursename, this._class),
       children: [
         ListView.builder(
             shrinkWrap: true,
@@ -86,7 +106,7 @@ class TestAccordion extends StatelessWidget {
             })
       ],
       trailing: SizedBox(
-        child: Text('${this._numClasses}'),
+        child: Text('${this._class}'),
       ),
     );
   }
