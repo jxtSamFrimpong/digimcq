@@ -1,25 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'package:flutter/material.dart';
 import '../views/microwidgets/appBarWidget.dart';
 import '../views/microwidgets/listOfCreatedTests.dart';
 import 'microwidgets/addTestMicro.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../utils/authservice.dart';
-//import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import '../providerclasses/providerclasses.dart' as prov;
 
 class CreateTestPage extends StatelessWidget {
-  Future<void> uploadingData(String class_, String course_code,
+  CreateTestPage();
+
+  Future<void> uploadingData(_cred, String class_, String course_code,
       String description, String name) async {
-    await FirebaseFirestore.instance.collection("tests").add({
+    var result =
+        await FirebaseFirestore.instance.collection(_cred.uid.toString()).add({
       'class_': class_,
       'course_code': course_code,
       'description': description,
       'name': name,
     });
+    //return result.id;
   }
 
-  void _openAddDialoge(BuildContext context) {
+  void _openAddDialoge(_cred, BuildContext context) {
     TextEditingController _name = TextEditingController();
     TextEditingController _description = TextEditingController();
     TextEditingController _code = TextEditingController();
@@ -32,9 +37,16 @@ class CreateTestPage extends StatelessWidget {
       onPressed: () {
         //TODO
         //Sub,it details to firebase and create test
-        uploadingData(_class.text.toString(), _code.text.toString(),
-            _description.text.toString(), _name.text.toLowerCase());
-        Navigator.of(context).pop();
+        if (_class.text.length > 1 &&
+            _code.text.length > 1 &&
+            _description.text.length > 1 &&
+            _name.text.length > 1) {
+          uploadingData(_cred, _class.text.toString(), _code.text.toString(),
+              _description.text.toString(), _name.text.toLowerCase());
+          Navigator.of(context).pop();
+        } else {
+          print('cannot update with empty data');
+        }
       },
     );
 
@@ -86,17 +98,30 @@ class CreateTestPage extends StatelessWidget {
     );
   }
 
-  CreateTestPage();
   TextEditingController addtestcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var _testDocID = Provider.of<prov.User>(context).getTestDocID;
+    var _cred = Provider.of<prov.User>(context).getUserCredentials;
+    ImageProvider provProfPic() {
+      ImageProvider prof = NetworkImage(
+        _cred.photoURL.toString(),
+      );
+      if (prof != null) {
+        return prof;
+      } else {
+        return AssetImage('assets/user.png');
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.blue,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          _openAddDialoge(context);
+          print(_cred.uid!);
+          _openAddDialoge(_cred, context);
         },
       ),
       appBar: PreferredSize(
@@ -135,14 +160,22 @@ class CreateTestPage extends StatelessWidget {
         //padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("Abhishek Mishra"),
-            accountEmail: Text("abhishekm977@gmail.com"),
+            accountName: Text(_cred.displayName.toString()),
+            accountEmail: Text(_cred.email),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.orange,
-              child: Text(
-                "A",
-                style: TextStyle(fontSize: 40.0),
-              ),
+              backgroundImage: provProfPic(),
+              onBackgroundImageError: (exception, stackTrace) {},
+
+              // FadeInImage(
+              //   placeholder: AssetImage('assets/user.png'),
+              //   image: NetworkImage(
+              //     _cred.photoURL.toString(),
+              //   ),
+              // ),
+              // foregroundImage: Image.asset('assets/user.png'),
+              //child: ,
+              //),
             ),
           ),
           ListTile(
@@ -173,7 +206,9 @@ class CreateTestPage extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Text("Log Out"),
             onTap: () {
+              //signOutprov(context);
               AuthService().signOut();
+
               //Navigator.pop(context);
             },
           ),

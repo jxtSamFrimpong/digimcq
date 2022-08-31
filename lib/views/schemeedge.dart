@@ -3,6 +3,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:edge_detection/edge_detection.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import '../providerclasses/providerclasses.dart' as prov;
 
 class SchemeEdge extends StatefulWidget {
   @override
@@ -11,6 +14,28 @@ class SchemeEdge extends StatefulWidget {
 
 class _SchemeEdgeState extends State<SchemeEdge> {
   //const SchemeEdge({Key? key}) : super(key: key);
+  Future<void> uploadingData(
+      String _uid,
+      String _testDocID,
+      String _student_idx,
+      String _got_marks,
+      String _out_of,
+      String _img_url,
+      List _answers) async {
+    var result = await FirebaseFirestore.instance
+        .collection(_uid.toString())
+        .doc(_testDocID)
+        .collection('students')
+        .add({
+      'student_idx': _student_idx,
+      'got_marks': _got_marks,
+      'out_of': _out_of,
+      'img_url': _img_url,
+      'answers': _answers
+    });
+    //return result.id;
+  }
+
   String? _lastImagePath;
 
   bool? _lastImageIsAScheme;
@@ -58,6 +83,9 @@ class _SchemeEdgeState extends State<SchemeEdge> {
 
   @override
   Widget build(BuildContext context) {
+    var _cred = Provider.of<prov.User>(context).getUserCredentials;
+    var _testDocID = Provider.of<prov.User>(context).getTestDocID;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.max,
@@ -83,6 +111,15 @@ class _SchemeEdgeState extends State<SchemeEdge> {
             MaterialButton(
               onPressed: () {
                 getImage(true);
+                uploadingData(
+                  _cred.uid,
+                  _testDocID,
+                  _testDocID.toString().toUpperCase(),
+                  '50',
+                  '60',
+                  '_img_url',
+                  [],
+                );
               },
               child: Text('Mark'),
             ),

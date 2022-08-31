@@ -3,6 +3,8 @@ import 'package:digimcq/views/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import '../providerclasses/providerclasses.dart' as prov;
 
 class AuthService {
   //handleAuthstate
@@ -11,6 +13,10 @@ class AuthService {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
+          //print(FirebaseAuth.instance.currentUser);
+          //Provider.of<Counter>(context, listen: false).incrementCounter();
+          Provider.of<prov.User>(context, listen: false)
+              .setUserCredentials(FirebaseAuth.instance.currentUser);
           return SafeArea(
             child: Scaffold(
               backgroundColor: Colors.blue,

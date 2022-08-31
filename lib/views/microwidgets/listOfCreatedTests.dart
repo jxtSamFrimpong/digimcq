@@ -2,18 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import '../../dummyData/testCreated.dart' as dummies;
+import 'package:provider/provider.dart';
+import '../../providerclasses/providerclasses.dart' as prov;
 
 class listOfCreatedTests extends StatelessWidget {
-  final Stream<QuerySnapshot> _testsStream =
-      FirebaseFirestore.instance.collection('tests').snapshots();
+  listOfCreatedTests();
 
-  listOfCreatedTests({Key? key}) : super(key: key);
-
-  List dummyTests = dummies.Tests;
-  List dummyClasses = dummies.classes;
+  // List dummyTests = dummies.Tests;
+  // List dummyClasses = dummies.classes;
 
   @override
   Widget build(BuildContext context) {
+    var _cred = Provider.of<prov.User>(context).getUserCredentials;
+    //var _testDocID = Provider.of<prov.User>(context).getTestDocID;
+    final Stream<QuerySnapshot> _testsStream =
+        FirebaseFirestore.instance.collection(_cred.uid.toString()).snapshots();
     // return Container(
     //   color: Colors.white,
     //   padding: EdgeInsets.all(8.0),
@@ -44,8 +47,8 @@ class listOfCreatedTests extends StatelessWidget {
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
-            return TestWidget(
-                data['course_code'], data['name'], data['class_']);
+            return TestWidget(_cred!.uid, document.id, data['course_code'],
+                data['name'], data['class_']);
             // return ListTile(
             //   title: Text(data['name']),
             //   subtitle: Text(data['description']),
@@ -58,21 +61,29 @@ class listOfCreatedTests extends StatelessWidget {
   }
 }
 
+void provideTestDocID(BuildContext context, id) {
+  Provider.of<prov.User>(context, listen: false).setTestDocID(id);
+}
+
 class TestWidget extends ListTile {
   //TODO: better fields along
+  String uid;
+  String doc_id;
   String _coursename;
   String _coursecode;
   //String _testId;
   String _class;
   //num _id = 0;
 
-  TestWidget(this._coursecode, this._coursename, this._class);
+  TestWidget(
+      this.uid, this.doc_id, this._coursecode, this._coursename, this._class);
 
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return ListTile(
       onTap: () {
+        provideTestDocID(context, doc_id);
         Navigator.pushNamed(context, 'test_info');
       },
       title: Text(this._coursename),
@@ -82,32 +93,32 @@ class TestWidget extends ListTile {
   }
 }
 
-class TestAccordion extends StatelessWidget {
-  String _coursename;
-  String _coursecode;
-  //String _testId;
-  String _class;
+// class TestAccordion extends StatelessWidget {
+//   String _coursename;
+//   String _coursecode;
+//   //String _testId;
+//   String _class;
 
-  TestAccordion(this._coursecode, this._coursename, this._class);
+//   TestAccordion(this._coursecode, this._coursename, this._class);
 
-  @override
-  Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: TestWidget(this._coursecode, this._coursename, this._class),
-      children: [
-        ListView.builder(
-            shrinkWrap: true,
-            itemCount: 4,
-            itemBuilder: (BuildContext ctx, int idx) {
-              return GestureDetector(
-                onTap: () {},
-                child: Text('Class $idx'),
-              );
-            })
-      ],
-      trailing: SizedBox(
-        child: Text('${this._class}'),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ExpansionTile(
+//       title: TestWidget(this._coursecode, this._coursename, this._class),
+//       children: [
+//         ListView.builder(
+//             shrinkWrap: true,
+//             itemCount: 4,
+//             itemBuilder: (BuildContext ctx, int idx) {
+//               return GestureDetector(
+//                 onTap: () {},
+//                 child: Text('Class $idx'),
+//               );
+//             })
+//       ],
+//       trailing: SizedBox(
+//         child: Text('${this._class}'),
+//       ),
+//     );
+//   }
+// }

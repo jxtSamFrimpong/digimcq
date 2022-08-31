@@ -14,7 +14,8 @@ class Counter extends ChangeNotifier {
 }
 
 class User extends ChangeNotifier {
-  late Object _user_credentials;
+  var _user_credentials;
+  var _test_doc_id;
 
   get getUserCredentials {
     if (_user_credentials == null) {
@@ -23,8 +24,20 @@ class User extends ChangeNotifier {
     return _user_credentials;
   }
 
-  setUserCredentials(cred) {
+  void setUserCredentials(cred) {
     this._user_credentials = cred;
+    notifyListeners();
+  }
+
+  get getTestDocID {
+    if (_test_doc_id == null) {
+      return '';
+    }
+    return _test_doc_id;
+  }
+
+  void setTestDocID(id) {
+    this._test_doc_id = id;
     notifyListeners();
   }
 }
