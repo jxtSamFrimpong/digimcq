@@ -21,6 +21,10 @@ class CreateTestPage extends StatelessWidget {
       'description': description,
       'name': name,
     });
+    await FirebaseFirestore.instance
+        .collection(_cred.uid.toString())
+        .doc(result.id)
+        .collection('students');
     //return result.id;
   }
 

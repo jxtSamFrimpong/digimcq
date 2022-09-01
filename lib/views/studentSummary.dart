@@ -16,7 +16,7 @@ class StudentsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _cred = Provider.of<prov.User>(context).getUserCredentials();
+    var _cred = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
 
     final Stream<QuerySnapshot> _testsStream = FirebaseFirestore.instance
@@ -42,6 +42,10 @@ class StudentsSummary extends StatelessWidget {
               return ListTile(
                 title: Text(data['student_idx']),
                 trailing: Text(data['got_marks']),
+                onTap: () {
+                  provideStudentDocID(context, data['student_idx']);
+                  Navigator.pushNamed(context, 'individual');
+                },
               );
             }).toList(),
           );
@@ -59,4 +63,8 @@ class StudentsSummary extends StatelessWidget {
     //       );
     //     }));
   }
+}
+
+void provideStudentDocID(BuildContext context, id) {
+  Provider.of<prov.User>(context, listen: false).setStudentDocId(id);
 }

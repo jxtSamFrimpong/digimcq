@@ -26,7 +26,9 @@ class _SchemeEdgeState extends State<SchemeEdge> {
         .collection(_uid.toString())
         .doc(_testDocID)
         .collection('students')
-        .add({
+        .doc(_student_idx)
+        //.collection(_student_idx)
+        .set({
       'student_idx': _student_idx,
       'got_marks': _got_marks,
       'out_of': _out_of,

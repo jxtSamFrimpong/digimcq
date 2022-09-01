@@ -92,33 +92,3 @@ class TestWidget extends ListTile {
     );
   }
 }
-
-// class TestAccordion extends StatelessWidget {
-//   String _coursename;
-//   String _coursecode;
-//   //String _testId;
-//   String _class;
-
-//   TestAccordion(this._coursecode, this._coursename, this._class);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ExpansionTile(
-//       title: TestWidget(this._coursecode, this._coursename, this._class),
-//       children: [
-//         ListView.builder(
-//             shrinkWrap: true,
-//             itemCount: 4,
-//             itemBuilder: (BuildContext ctx, int idx) {
-//               return GestureDetector(
-//                 onTap: () {},
-//                 child: Text('Class $idx'),
-//               );
-//             })
-//       ],
-//       trailing: SizedBox(
-//         child: Text('${this._class}'),
-//       ),
-//     );
-//   }
-// }

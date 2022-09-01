@@ -16,6 +16,7 @@ class Counter extends ChangeNotifier {
 class User extends ChangeNotifier {
   var _user_credentials;
   var _test_doc_id;
+  var _student_doc_id;
 
   get getUserCredentials {
     if (_user_credentials == null) {
@@ -38,6 +39,18 @@ class User extends ChangeNotifier {
 
   void setTestDocID(id) {
     this._test_doc_id = id;
+    notifyListeners();
+  }
+
+  get getStudentDocID {
+    if (_student_doc_id == null) {
+      return '';
+    }
+    return _student_doc_id;
+  }
+
+  void setStudentDocId(id) {
+    this._student_doc_id = id;
     notifyListeners();
   }
 }
