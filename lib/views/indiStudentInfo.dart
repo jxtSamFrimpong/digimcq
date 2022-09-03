@@ -39,6 +39,7 @@ class IndividualStudentInfo extends StatelessWidget {
     ));
 
     // SafeArea(
+
     //   child: Scaffold(
     //     body: SingleChildScrollView(
     //       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
