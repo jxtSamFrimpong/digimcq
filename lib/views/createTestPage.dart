@@ -1,25 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
+import '../providerclasses/providerclasses.dart' as prov;
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import '../views/microwidgets/appBarWidget.dart';
 import '../views/microwidgets/listOfCreatedTests.dart';
 import 'microwidgets/addTestMicro.dart';
 import '../utils/authservice.dart';
-import '../providerclasses/providerclasses.dart' as prov;
 
 class CreateTestPage extends StatelessWidget {
   CreateTestPage();
 
   Future<void> uploadingData(_cred, String class_, String course_code,
-      String description, String name) async {
+      String description, String name, num endNumber) async {
     var result =
         await FirebaseFirestore.instance.collection(_cred.uid.toString()).add({
       'class_': class_,
       'course_code': course_code,
       'description': description,
       'name': name,
+      'endNumber': endNumber,
+      'scheme': []
     });
     await FirebaseFirestore.instance
         .collection(_cred.uid.toString())
@@ -32,8 +36,15 @@ class CreateTestPage extends StatelessWidget {
     TextEditingController _name = TextEditingController();
     TextEditingController _description = TextEditingController();
     TextEditingController _code = TextEditingController();
-    //TextEditingController _guid = TextEditingController();
     TextEditingController _class = TextEditingController();
+    TextEditingController _endNumber = TextEditingController();
+
+    Widget cancelButton = MaterialButton(
+      child: Text('Cancel'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
 
     // Create button
     Widget okButton = ElevatedButton(
@@ -43,12 +54,26 @@ class CreateTestPage extends StatelessWidget {
         //Sub,it details to firebase and create test
         if (_class.text.length > 1 &&
             _code.text.length > 1 &&
-            _description.text.length > 1 &&
-            _name.text.length > 1) {
-          uploadingData(_cred, _class.text.toString(), _code.text.toString(),
-              _description.text.toString(), _name.text.toLowerCase());
+            _name.text.length > 1 &&
+            int.parse(_endNumber.text) > 0) {
+          uploadingData(
+              _cred,
+              _class.text.toString(),
+              _code.text.toString(),
+              _description.text.toString(),
+              _name.text.toLowerCase(),
+              int.parse(_endNumber.text));
           Navigator.of(context).pop();
         } else {
+          //TOAST
+          Fluttertoast.showToast(
+              msg: "Fill all required Fields",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
           print('cannot update with empty data');
         }
       },
@@ -61,19 +86,26 @@ class CreateTestPage extends StatelessWidget {
         children: [
           TextField(
             controller: _name,
+            // keyboardType: TextInputType.,
             decoration: InputDecoration(
                 labelText: 'Test Name', hintText: 'Enter Name of Test'),
           ),
-          // TextField(
-          //   controller: _guid,
-          //   decoration: InputDecoration(
-          //       labelText: 'Unique Identifier',
-          //       hintText: 'Give a globally unique identifier'),
-          // ),
           TextField(
             controller: _code,
             decoration: InputDecoration(
                 labelText: 'Course Code', hintText: 'Enter Course Code'),
+          ),
+          TextField(
+            controller: _class,
+            decoration: InputDecoration(
+                labelText: 'Class', hintText: 'Eg. Computer Engineering 4'),
+          ),
+          TextField(
+            controller: _endNumber,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                labelText: 'Number of questions',
+                hintText: 'Eg. Computer Engineering 4'),
           ),
           TextField(
             controller: _description,
@@ -81,14 +113,10 @@ class CreateTestPage extends StatelessWidget {
                 labelText: 'Description',
                 hintText: 'Enter description of test'),
           ),
-          TextField(
-            controller: _class,
-            decoration: InputDecoration(
-                labelText: 'Class', hintText: 'Eg. Computer Engineering 4'),
-          ),
         ],
       ),
       actions: [
+        cancelButton,
         okButton,
       ],
     );
@@ -102,7 +130,7 @@ class CreateTestPage extends StatelessWidget {
     );
   }
 
-  TextEditingController addtestcontroller = TextEditingController();
+  //TextEditingController addtestcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +152,7 @@ class CreateTestPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          print(_cred.uid!);
+          //print(_cred.uid!);
           _openAddDialoge(_cred, context);
         },
       ),
@@ -226,27 +254,6 @@ class CreateTestPage extends StatelessWidget {
             Expanded(
               child: listOfCreatedTests(),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     SizedBox(
-            //       width: 200.0,
-            //       child: TextField(
-            //         controller: addtestcontroller,
-            //       ),
-            //     ),
-            //     MaterialButton(
-            //       onPressed: () {
-            //         //TODO do some checks add test to firebase
-            //         addtestcontroller.clear();
-            //         Future.delayed(Duration(seconds: 3));
-            //         Navigator.pushNamed(context, 'test_info');
-            //       },
-            //       child: Center(child: Text('+ ADD')),
-            //     )
-            //   ],
-            // )
-            // ,
           ]),
     );
   }

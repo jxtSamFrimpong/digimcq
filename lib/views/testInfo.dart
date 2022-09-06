@@ -8,7 +8,7 @@ import 'studentSummary.dart';
 import 'schemeedge.dart';
 
 class TestInfo extends StatelessWidget {
-  const TestInfo({Key? key}) : super(key: key);
+  TestInfo();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class TestInfo extends StatelessWidget {
             ),
             Tab(
               child: Center(
-                child: Text('Grades'),
+                child: Text('Students'),
               ),
             ),
             Tab(

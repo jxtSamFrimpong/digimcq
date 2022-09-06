@@ -17,6 +17,12 @@ class User extends ChangeNotifier {
   var _user_credentials;
   var _test_doc_id;
   var _student_doc_id;
+  var _endNumber;
+  var _appName = 'mcq grader';
+
+  get getAppName{
+    return _appName;
+  }
 
   get getUserCredentials {
     if (_user_credentials == null) {
@@ -51,6 +57,15 @@ class User extends ChangeNotifier {
 
   void setStudentDocId(id) {
     this._student_doc_id = id;
+    notifyListeners();
+  }
+
+  get getEndNumber {
+    return this._endNumber;
+  }
+
+  setEndNumber(val) {
+    this._endNumber = val;
     notifyListeners();
   }
 }

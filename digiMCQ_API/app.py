@@ -9,9 +9,9 @@ from telvot import *
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def hello_world():
-  return "Hello, World!"
+  return "Hello, Examiner!"
 
 @app.route("/teleStorageGetFileID", methods=['POST'])
 def getFileIDofTeleStorage():
@@ -71,5 +71,5 @@ def mark_sheme():
 
 
 
-if __name__ == "__main__":
-    app.run(port=8000, debug=True)
+# if __name__ == "__main__":
+#     app.run()

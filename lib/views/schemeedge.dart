@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../providerclasses/providerclasses.dart' as prov;
+import 'package:dio/dio.dart';
+import 'dart:convert';
+import '../services/TeleStorageModel.dart';
 
 class SchemeEdge extends StatefulWidget {
   @override
@@ -14,29 +17,16 @@ class SchemeEdge extends StatefulWidget {
 
 class _SchemeEdgeState extends State<SchemeEdge> {
   //const SchemeEdge({Key? key}) : super(key: key);
-  Future<void> uploadingData(
-      String _uid,
-      String _testDocID,
-      String _student_idx,
-      String _got_marks,
-      String _out_of,
-      String _img_url,
-      List _answers) async {
-    var result = await FirebaseFirestore.instance
-        .collection(_uid.toString())
-        .doc(_testDocID)
-        .collection('students')
-        .doc(_student_idx)
-        //.collection(_student_idx)
-        .set({
-      'student_idx': _student_idx,
-      'got_marks': _got_marks,
-      'out_of': _out_of,
-      'img_url': _img_url,
-      'answers': _answers
-    });
-    //return result.id;
-  }
+  late bool markSchemePresent;
+
+  // retrieveMarkScheme(_uid, _testDocID) async {
+  //   var scheme = await FirebaseFirestore.instance
+  //       .collection(_uid.toString())
+  //       .doc(_testDocID)
+  //       .get()
+  //       .then((value) => value.data()!['scheme']);
+  //   print(scheme);
+  // }
 
   String? _lastImagePath;
 
@@ -54,13 +44,19 @@ class _SchemeEdgeState extends State<SchemeEdge> {
     return FileImage(File(_lastImagePath!));
   }
 
-  Future<void> getImage(marking) async {
+  Future<String?> getImage(marking) async {
     String? imagePath;
+    var file_ids;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
       imagePath = (await EdgeDetection.detectEdge);
-      print("$imagePath");
+      // setState(() {
+      //   _lastImagePath = imagePath;
+      // });
+
+      print("$imagePath" + "ok");
+      return imagePath;
     } on PlatformException catch (e) {
       imagePath = e.toString();
     }
@@ -70,23 +66,32 @@ class _SchemeEdgeState extends State<SchemeEdge> {
     // setState to update our non-existent appearance.
     if (!mounted) {
       if (marking) {
-        //async send to api and do something about it
+        setState(() {
+          _lastImagePath = imagePath;
+        });
       } else {
         //async send to api and do something about it
+        //file_ids = await sendFileGetID(imagePath);
+        setState(() {
+          _lastImagePath = imagePath;
+        });
       }
 
-      return;
+      //return;
     }
 
-    setState(() {
-      _lastImagePath = imagePath;
-    });
+    // setState(() {
+    //   _lastImagePath = imagePath;
+    //   print(_lastImagePath);
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
+    var _endNumber = provideEndNumber(context, _cred.uid, _testDocID);
+    print(_endNumber);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -111,7 +116,7 @@ class _SchemeEdgeState extends State<SchemeEdge> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             MaterialButton(
-              onPressed: () {
+              onPressed: () async {
                 getImage(true);
                 uploadingData(
                   _cred.uid,
@@ -123,11 +128,20 @@ class _SchemeEdgeState extends State<SchemeEdge> {
                   [],
                 );
               },
-              child: Text('Mark'),
+              child: Text('Mark Script'),
             ),
             MaterialButton(
-              onPressed: () {
-                getImage(false);
+              onPressed: () async {
+                var file_path = await getImage(false);
+                setState(() {
+                  _lastImagePath = file_path;
+                });
+
+                var something = await sendFileGetID(file_path.toString());
+
+                var file_id =
+                    teleStorageFromJson(jsonDecode(something)).data.fileId;
+                print(file_id);
               },
               child: Text('Key'),
             )
@@ -135,80 +149,93 @@ class _SchemeEdgeState extends State<SchemeEdge> {
         ))
       ],
     );
-
-    // Scaffold(
-    //   appBar: PreferredSize(
-    //     preferredSize: Size.fromHeight(70.0),
-    //     child: Padding(
-    //       padding: const EdgeInsets.all(10.0),
-    //       child: AppBar(
-    //         toolbarHeight: 50.0,
-    //         //backgroundColor: Colors.white,
-    //         backgroundColor: Colors.purpleAccent,
-    //         elevation: 0.0,
-    //         // leading: IconButton(
-    //         //   icon: Icon(
-    //         //     Icons.menu,
-    //         //     color: Colors.black,
-    //         //   ),
-    //         //   onPressed: () {},
-    //         // ),
-    //         title: Text(
-    //           "APP_NAME",
-    //           style: TextStyle(color: Colors.black),
-    //         ),
-    //         actions: [
-    //           IconButton(
-    //               onPressed: () {},
-    //               icon: Icon(
-    //                 Icons.search,
-    //                 color: Colors.black,
-    //               ))
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    //   body: Column(
-    //     children: [
-    //       Expanded(
-    //           child: Column(
-    //         children: [
-    //           Container(
-    //             color: Colors.amberAccent,
-    //             child: AspectRatio(
-    //               aspectRatio: 105 / 151,
-    //               child: FadeInImage(
-    //                 placeholder: AssetImage('assets/testplaceholderimage.jpg'),
-    //                 //image: NetworkImage('https://picsum.photos/250?image=9'),
-    //                 image: provideImage(),
-    //               ),
-    //             ),
-    //           ),
-    //           Container()
-    //         ],
-    //       )),
-    //       Container(
-    //           //decoration: BoxDecoration(backgroundBlendMode: BlendMode.color),
-    //           height: MediaQuery.of(context).size.height * 0.1,
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //             children: [
-    //               MaterialButton(
-    //                 onPressed: () {
-    //                   getImage(true);
-    //                 },
-    //                 child: Text('Mark'),
-    //               ),
-    //               MaterialButton(
-    //                 onPressed: () {
-    //                   getImage(false);
-    //                 },
-    //                 child: Text('Key'),
-    //               )
-    //             ],
-    //           ))
-    //     ],
-    //   ),
-    // );
   }
+}
+
+Future<void> uploadingData(
+  String _uid,
+  String _testDocID,
+  String _student_idx,
+  String _got_marks,
+  String _out_of,
+  String _img_url,
+  List _answers,
+) async {
+  //Before firebase upload we need _img_url and _answers from our api
+  var result = await FirebaseFirestore.instance
+      .collection(_uid.toString())
+      .doc(_testDocID)
+      .collection('students')
+      .doc(_student_idx)
+      //.collection(_student_idx)
+      .set({
+    'student_idx': _student_idx,
+    'got_marks': _got_marks,
+    'out_of': _out_of,
+    'img_url': _img_url,
+    'answers': _answers,
+    // 'file_id': file_ids['data']['file_id'],
+    // 'file_unique_id': file_ids['data']['file_unique_id']
+  });
+  //return result.id;
+}
+
+Future uploadMarkScheme(scheme_list, uid, test_id) async {
+  var res = await FirebaseFirestore.instance
+      .collection(uid)
+      .doc(test_id)
+      .update({"scheme": scheme_list});
+}
+
+// Future<Map> sendFileGetID(file_Path) async {
+//   Response response;
+//   var dio = Dio();
+//   String BASE_URL = 'http://20.237.63.30:8080/teleStorageGetFileID';
+//   var formData = FormData.fromMap({
+//     'file': await MultipartFile.fromFile(file_Path),
+//     // 'files': [
+//     //   await MultipartFile.fromFile('./text1.txt', filename: 'text1.txt'),
+//     //   await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
+//     // ]
+//   });
+//   response = await dio.post(BASE_URL, data: formData);
+//   response
+//   print(response.data);
+//   return jsonDecode(response.data);
+// }
+
+Future<Map> markScheme(file_id, test_id, end_number) async {
+  Response response;
+  var dio = Dio();
+
+  String BASE_URL = 'http://20.237.63.30:8080/mark_scheme';
+  bool scheme_or_paper = true;
+
+  Map params = {
+    "file_id": file_id,
+    "test_id": test_id,
+    "end_number": end_number,
+    "scheme_or_paper": scheme_or_paper
+  };
+
+  response = await dio.post(BASE_URL, data: jsonEncode(params));
+
+  return jsonDecode(response.data);
+}
+
+// retrieveAnswersToMarkingScheme(file_ids, test_id, endNumber) async {
+//   //TODO markScheme
+//   Map scheme = await markScheme(file_ids['data']['file_id'], 'test_id', 40);
+//   if (scheme != null) {
+//     //print(scheme['data']['scheme']);
+//     return scheme;
+//   }
+// }
+Future provideEndNumber(BuildContext context, uid, doc_id) async {
+  var _end = await FirebaseFirestore.instance
+      .collection(uid)
+      .doc(doc_id)
+      .get()
+      .then((value) => value.data()!['endNumber']);
+  return _end;
 }

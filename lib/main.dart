@@ -22,6 +22,7 @@ import 'providerclasses/providerclasses.dart';
 import 'views/schemeedge.dart';
 import 'views/login.dart';
 import 'utils/authservice.dart';
+import 'scandy/apirelearn.dart';
 
 void main() async {
   // try {
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           initialRoute: 'handleauthstate',
+          //initialRoute: 'home',
           routes: {
             //'welcome':
             'handleauthstate': (context) => AuthService().handleAuthState(),
@@ -83,7 +85,7 @@ class MyHomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.blue,
-        //body: CreateTestPage(),
+        //body: ApiRelearn(),
         body: Login(),
       ),
     );

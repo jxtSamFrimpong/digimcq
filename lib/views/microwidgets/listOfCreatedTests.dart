@@ -82,8 +82,9 @@ class TestWidget extends ListTile {
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return ListTile(
-      onTap: () {
+      onTap: () async {
         provideTestDocID(context, doc_id);
+
         Navigator.pushNamed(context, 'test_info');
       },
       title: Text(this._coursename),
@@ -91,4 +92,11 @@ class TestWidget extends ListTile {
       trailing: Text(this._class), //TODO: string parse
     );
   }
+}
+
+Future getEndNumber(uid, doc_id) async {
+  var q = await FirebaseFirestore.instance.collection(uid).doc(doc_id).get();
+  // if (q.)
+  return q.get('endNumber');
+  // return q['endNumber'];
 }
