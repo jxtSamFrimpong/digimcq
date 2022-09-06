@@ -72,7 +72,7 @@ Future<MarkScheme> getMarkScheme(String file_id, String test_id, int endNumber) 
       "test_id":test_id,
       "end_number":endNumber,
       "scheme_or_paper":scheme_or_paper
-    }
+    });
     var data = response.body;
   print(data);
 
@@ -81,5 +81,4 @@ Future<MarkScheme> getMarkScheme(String file_id, String test_id, int endNumber) 
   }else{
     return markSchemeFromJson(data.toString());
   }
-  );
 }
