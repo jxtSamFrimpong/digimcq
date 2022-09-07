@@ -49,14 +49,14 @@ class CreateTestPage extends StatelessWidget {
     // Create button
     Widget okButton = ElevatedButton(
       child: Text("OK"),
-      onPressed: () {
+      onPressed: () async {
         //TODO
         //Sub,it details to firebase and create test
         if (_class.text.length > 1 &&
             _code.text.length > 1 &&
             _name.text.length > 1 &&
             int.parse(_endNumber.text) > 0) {
-          uploadingData(
+          await uploadingData(
               _cred,
               _class.text.toString(),
               _code.text.toString(),

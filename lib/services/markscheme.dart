@@ -4,6 +4,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../utils/baseurl.dart';
+import 'package:dio/dio.dart';
 
 MarkScheme markSchemeFromJson(String str) =>
     MarkScheme.fromJson(json.decode(str));
@@ -63,22 +64,31 @@ class Scheme {
       };
 }
 
-Future<MarkScheme> getMarkScheme(String file_id, String test_id, int endNumber) async{
+Future getMarkScheme(String file_id, String test_id, int endNumber) async {
+  print('inside markscheme');
+  print(file_id);
+  print(test_id);
+  print(endNumber);
   bool scheme_or_paper = true;
-  var response = await http.post(
-    Uri.https(BASE_URL, 'mark_scheme'),
-    body:{
-      "file_id":file_id,
-      "test_id":test_id,
-      "end_number":endNumber,
-      "scheme_or_paper":scheme_or_paper
-    });
-    var data = response.body;
-  print(data);
 
-  if(response.statusCode==200){
-    return markSchemeFromJson(data.toString());
-  }else{
-    return markSchemeFromJson(data.toString());
-  }
+  Response response;
+  var dio = Dio();
+
+  String BASE_URL = 'http://52.188.132.234:8080/mark_scheme';
+
+  var params = {
+    "file_id": file_id,
+    "test_id": test_id,
+    "end_number": endNumber,
+    "scheme_or_paper": scheme_or_paper,
+  };
+
+  response = await dio.post(BASE_URL, data: jsonEncode(params));
+  // if (response.statusCode == 200) {
+  //   return response.data;
+  // } else {
+  //   return {"error": "error"};
+  // }
+  print(response.data);
+  return response.data;
 }

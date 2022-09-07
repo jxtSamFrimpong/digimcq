@@ -66,7 +66,7 @@ Future markScheme(file_id, test_id, end_number) async {
   Response response;
   var dio = Dio();
 
-  String BASE_URL = 'http://20.237.63.30:8080/mark_scheme';
+  String BASE_URL = 'http://52.188.132.234:8080/mark_scheme';
   bool scheme_or_paper = true;
 
   var params = {
@@ -82,6 +82,7 @@ Future markScheme(file_id, test_id, end_number) async {
   // } else {
   //   return {"error": "error"};
   // }
+  print(response.data);
   return response.data;
 }
 
@@ -95,10 +96,10 @@ void main() async {
   // }
 
 //TODO markScheme
-  // Map scheme = await markScheme(exampleFileID, 'test_id', 40);
-  // if (scheme != null) {
-  //   print(scheme['data']['scheme']);
-  // }
+  Map scheme = await markScheme(exampleFileID, 'test_id', 40);
+  if (scheme != null) {
+    print(scheme['data']['scheme']);
+  }
 
   //TODO: mark script example
   // Map dummy_scheme = dummy.markschemedummy;

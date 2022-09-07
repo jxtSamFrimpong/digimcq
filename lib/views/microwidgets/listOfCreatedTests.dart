@@ -48,7 +48,7 @@ class listOfCreatedTests extends StatelessWidget {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
             return TestWidget(_cred!.uid, document.id, data['course_code'],
-                data['name'], data['class_']);
+                data['name'], data['class_'], data['endNumber']);
             // return ListTile(
             //   title: Text(data['name']),
             //   subtitle: Text(data['description']),
@@ -65,6 +65,10 @@ void provideTestDocID(BuildContext context, id) {
   Provider.of<prov.User>(context, listen: false).setTestDocID(id);
 }
 
+void provideEndNumber(BuildContext context, number) {
+  Provider.of<prov.User>(context, listen: false).setEndNumber(number);
+}
+
 class TestWidget extends ListTile {
   //TODO: better fields along
   String uid;
@@ -73,10 +77,11 @@ class TestWidget extends ListTile {
   String _coursecode;
   //String _testId;
   String _class;
+  var _endNumber;
   //num _id = 0;
 
-  TestWidget(
-      this.uid, this.doc_id, this._coursecode, this._coursename, this._class);
+  TestWidget(this.uid, this.doc_id, this._coursecode, this._coursename,
+      this._class, this._endNumber);
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +89,7 @@ class TestWidget extends ListTile {
     return ListTile(
       onTap: () async {
         provideTestDocID(context, doc_id);
-
+        provideEndNumber(context, _endNumber);
         Navigator.pushNamed(context, 'test_info');
       },
       title: Text(this._coursename),
@@ -94,9 +99,9 @@ class TestWidget extends ListTile {
   }
 }
 
-Future getEndNumber(uid, doc_id) async {
-  var q = await FirebaseFirestore.instance.collection(uid).doc(doc_id).get();
-  // if (q.)
-  return q.get('endNumber');
-  // return q['endNumber'];
-}
+// Future getEndNumber(uid, doc_id) async {
+//   var q = await FirebaseFirestore.instance.collection(uid).doc(doc_id).get();
+//   // if (q.)
+//   return q.get('endNumber');
+//   // return q['endNumber'];
+// }
