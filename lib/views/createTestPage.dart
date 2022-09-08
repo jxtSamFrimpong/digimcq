@@ -10,9 +10,10 @@ import '../views/microwidgets/appBarWidget.dart';
 import '../views/microwidgets/listOfCreatedTests.dart';
 import 'microwidgets/addTestMicro.dart';
 import '../utils/authservice.dart';
+import 'microwidgets/appBarWidget.dart';
 
 class CreateTestPage extends StatelessWidget {
-  CreateTestPage();
+  //CreateTestPage();
 
   Future<void> uploadingData(_cred, String class_, String course_code,
       String description, String name, num endNumber) async {
@@ -134,16 +135,15 @@ class CreateTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appName = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
-    ImageProvider provProfPic() {
-      ImageProvider prof = NetworkImage(
-        _cred.photoURL.toString(),
-      );
+    ImageProvider provProfPic(inp) {
+      ImageProvider prof = inp;
       if (prof != null) {
         return prof;
       } else {
-        return AssetImage('assets/user.png');
+        return AssetImage('assets/drawer/user.png');
       }
     }
 
@@ -195,8 +195,9 @@ class CreateTestPage extends StatelessWidget {
             accountName: Text(_cred.displayName.toString()),
             accountEmail: Text(_cred.email),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.orange,
-              backgroundImage: provProfPic(),
+              //backgroundColor: Colors.orange,
+              backgroundImage:
+                  provProfPic(NetworkImage(_cred.photoURL.toString())),
               onBackgroundImageError: (exception, stackTrace) {},
 
               // FadeInImage(
@@ -205,7 +206,8 @@ class CreateTestPage extends StatelessWidget {
               //     _cred.photoURL.toString(),
               //   ),
               // ),
-              // foregroundImage: Image.asset('assets/user.png'),
+              // foregroundImage:
+              //     provProfPic(AssetImage('assets/drawer/user.png')),
               //child: ,
               //),
             ),
