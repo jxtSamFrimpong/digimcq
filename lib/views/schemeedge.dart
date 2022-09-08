@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../providerclasses/providerclasses.dart' as prov;
-import 'package:dio/dio.dart';
+//import 'package:dio/dio.dart';
 import 'dart:convert';
 import '../services/TeleStorageModel.dart';
 import '../services/markscheme.dart';
@@ -225,29 +225,34 @@ Future<void> uploadingData(
   String _uid,
   String _testDocID,
   String _student_idx,
-  var _got_marks,
-  var _out_of,
+  int _got_marks,
+  int _out_of,
   String _img_url,
   List _answers,
 ) async {
+  //print(_got_marks.runtimeType);
+  //print(_out_of.runtimeType);
   //Before firebase upload we need _img_url and _answers from our api
-  double _percentage =
-      (int.parse(_got_marks).toDouble() / int.parse(_out_of).toDouble()) *
-          100.0;
-  var result = await FirebaseFirestore.instance
-      .collection(_uid.toString())
-      .doc(_testDocID)
-      .collection('students')
-      .doc(_student_idx)
-      //.collection(_student_idx)
-      .set({
-    'student_idx': _student_idx,
-    'got_marks': int.parse(_got_marks),
-    'out_of': int.parse(_out_of),
-    'file_id': _img_url,
-    'answers': _answers,
-    'percentage': _percentage
-  });
+  double _percentage = (_got_marks.toDouble() / _out_of.toDouble()) * 100.0;
+  try {
+    await FirebaseFirestore.instance
+        .collection(_uid.toString())
+        .doc(_testDocID)
+        .collection('students')
+        .doc(_student_idx)
+        //.collection(_student_idx)
+        .set({
+      'student_idx': _student_idx,
+      'got_marks': _got_marks,
+      'out_of': _out_of,
+      'file_id': _img_url,
+      'answers': _answers,
+      'percentage': _percentage
+    });
+    //print(result);
+  } catch (e) {
+    print(e);
+  }
   //return result.id;
 }
 

@@ -25,12 +25,6 @@ import 'utils/authservice.dart';
 import 'scandy/apirelearn.dart';
 
 void main() async {
-  // try {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   cameras = await availableCameras();
-  // } on CameraException catch (e) {
-  //   print('Error in fetching the cameras: $e');
-  // }
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
