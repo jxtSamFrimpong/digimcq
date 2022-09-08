@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
                 width: 20.0,
               ),
               Text(
-                '    Signin',
+                '    Sign in',
                 style: TextStyle(
                   fontFamily: 'Orbitron',
                   color: Color.fromRGBO(29, 53, 87, 1.0),
