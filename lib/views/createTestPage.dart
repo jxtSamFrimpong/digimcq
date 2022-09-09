@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../providerclasses/providerclasses.dart' as prov;
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -135,7 +134,6 @@ class CreateTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appName = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
     ImageProvider provProfPic(inp) {
@@ -148,9 +146,13 @@ class CreateTestPage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color.fromRGBO(241, 250, 238, 1.0),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        backgroundColor: Color.fromRGBO(29, 53, 87, 1.0),
+        child: Image.asset(
+          'assets/createtest/icons8-add-64.png',
+          fit: BoxFit.cover,
+        ),
         onPressed: () {
           //print(_cred.uid!);
           _openAddDialoge(_cred, context);
@@ -159,10 +161,14 @@ class CreateTestPage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(0.0),
           child: AppBar(
+            iconTheme: IconThemeData(
+              color: Color.fromRGBO(241, 250, 238, 1.0),
+            ),
+            shadowColor: Color.fromRGBO(69, 123, 157, 1.0),
             toolbarHeight: 50.0,
-            backgroundColor: Colors.white,
+            backgroundColor: Color.fromRGBO(29, 53, 87, 1.0),
             elevation: 0.0,
             // leading: IconButton(
             //   icon: Icon(
@@ -172,82 +178,154 @@ class CreateTestPage extends StatelessWidget {
             //   onPressed: () {},
             // ),
             title: Text(
-              "APP_NAME",
-              style: TextStyle(color: Colors.black),
+              "MCQ GRADER",
+              style: TextStyle(
+                fontFamily: 'Rampart_One',
+                color: Color.fromRGBO(241, 250, 238, 1.0),
+              ),
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ))
+                onPressed: () {},
+                icon: Icon(
+                  Icons.search,
+                  //color: Color.fromRGBO(241, 250, 238, 1.0),
+                ),
+              )
             ],
           ),
         ),
       ),
       drawer: Drawer(
+        child: Container(
+          color: Color.fromRGBO(241, 250, 238, 1.0),
           child: Column(
-        // Important: Remove any padding from the ListView.
-        //padding: EdgeInsets.zero,
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(_cred.displayName.toString()),
-            accountEmail: Text(_cred.email),
-            currentAccountPicture: CircleAvatar(
-              //backgroundColor: Colors.orange,
-              backgroundImage:
-                  provProfPic(NetworkImage(_cred.photoURL.toString())),
-              onBackgroundImageError: (exception, stackTrace) {},
+            // Important: Remove any padding from the ListView.
+            //padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                  //color: Color.fromRGBO(69, 123, 157, 1.0),
+                ),
+                accountName: Text(
+                  _cred.displayName.toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Rampart_One',
+                    color: Color.fromRGBO(241, 250, 238, 1.0),
+                  ),
+                ),
+                accountEmail: Text(
+                  _cred.email,
+                  style: TextStyle(
+                    //fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Rampart_One',
+                    color: Color.fromRGBO(241, 250, 238, 1.0),
+                  ),
+                ),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Color.fromRGBO(241, 250, 238, 1.0),
+                  backgroundImage:
+                      provProfPic(NetworkImage(_cred.photoURL.toString())),
+                  onBackgroundImageError: (exception, stackTrace) {},
 
-              // FadeInImage(
-              //   placeholder: AssetImage('assets/user.png'),
-              //   image: NetworkImage(
-              //     _cred.photoURL.toString(),
-              //   ),
-              // ),
-              // foregroundImage:
-              //     provProfPic(AssetImage('assets/drawer/user.png')),
-              //child: ,
-              //),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Home"),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text("Settings"),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.contacts),
-            title: Text("About App"),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          Expanded(
-            child: Container(),
-          ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text("Log Out"),
-            onTap: () {
-              //signOutprov(context);
-              AuthService().signOut();
+                  // FadeInImage(
+                  //   placeholder: AssetImage('assets/user.png'),
+                  //   image: NetworkImage(
+                  //     _cred.photoURL.toString(),
+                  //   ),
+                  // ),
+                  // foregroundImage:
+                  //     provProfPic(AssetImage('assets/drawer/user.png')),
+                  //child: ,
+                  //),
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.home,
+                  color: Color.fromRGBO(69, 123, 157, 1.0),
+                ),
+                title: Text(
+                  "Home",
+                  style: TextStyle(
+                    //fontSize: 25,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Orbitron',
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  color: Color.fromRGBO(69, 123, 157, 1.0),
+                ),
+                title: Text(
+                  "Settings",
+                  style: TextStyle(
+                    //fontSize: 25,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Orbitron',
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.contacts,
+                  color: Color.fromRGBO(69, 123, 157, 1.0),
+                ),
+                title: Text(
+                  "About App",
+                  style: TextStyle(
+                    //fontSize: 25,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Orbitron',
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.logout,
+                  color: Color.fromRGBO(69, 123, 157, 1.0),
+                ),
+                title: Text(
+                  "Log Out",
+                  style: TextStyle(
+                    //fontSize: 25,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Orbitron',
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
+                onTap: () {
+                  //signOutprov(context);
+                  AuthService().signOut();
 
-              //Navigator.pop(context);
-            },
+                  //Navigator.pop(context);
+                },
+              ),
+            ],
           ),
-        ],
-      )),
+        ),
+      ),
       body: Column(
           //scrollDirection: Axis.vertical,
           //shrinkWrap: true,

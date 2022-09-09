@@ -62,6 +62,7 @@ dev_dependencies:
   dio: ^4.0.6
   build_runner: ^2.2.0
   json_serializable: ^6.3.1
+  animated_text_kit: ^4.2.2
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -83,6 +84,9 @@ flutter:
       - assets/login/layered-waves-haikei.png
       - assets/drawer/user.png
       - assets/login/icons8-google-64.png
+      - assets/login/data-sheet-256.png
+      - assets/login/data-sheet-512.png
+      - assets/createtest/icons8-add-64.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

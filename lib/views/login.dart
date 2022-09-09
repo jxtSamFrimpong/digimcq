@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/authservice.dart';
 import '../providerclasses/providerclasses.dart' as prov;
 import 'package:provider/provider.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -65,6 +66,68 @@ class _LoginState extends State<Login> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              SizedBox(
+                height: 50.0,
+              ),
+              Container(
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(14.0),
+                //   color: Color.fromRGBO(69, 123, 157, 1.0),
+                // ),
+                height: 300,
+                width: 300,
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Image.asset(
+                        'assets/login/data-sheet-256.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Text(
+                      'MCQ GRADER',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Rampart_One',
+                        color: Color.fromRGBO(29, 53, 87, 1.0),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
+              Expanded(
+                child: SizedBox(
+                  //height: 100.0,
+                  //width: 250.0,
+                  child: DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 15.0,
+                      fontFamily: 'Orbitron',
+                      color: Color.fromRGBO(29, 53, 87, 1.0),
+                    ),
+                    child: AnimatedTextKit(
+                      totalRepeatCount: 10,
+                      pause: const Duration(milliseconds: 2500),
+                      //displayFullTextOnTap: true,
+                      stopPauseOnTap: true,
+                      animatedTexts: [
+                        TyperAnimatedText('In just three simple steps'),
+                        TyperAnimatedText('Create your Test'),
+                        TyperAnimatedText('Generate the Key to the test'),
+                        TyperAnimatedText("Mark your student's scripts"),
+                      ],
+                      onTap: () {
+                        print("Tap animatet text Event");
+                      },
+                    ),
+                  ),
+                ),
+              ),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -92,26 +155,9 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              // Center(
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: MaterialButton(
-              //       onPressed: () {},
-              //       child: Text('Register'),
-              //     ),
-              //   ),
-              // ),
-
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.27,
+                height: MediaQuery.of(context).size.height * 0.23,
               )
-              // Row(
-              //   children: [
-              //     Padding(
-              //       padding: EdgeInsets.all(12.0),
-              //     ),
-              //   ],
-              // )
             ],
           ),
         ],

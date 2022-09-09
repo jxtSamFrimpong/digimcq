@@ -69,6 +69,16 @@ void provideEndNumber(BuildContext context, number) {
   Provider.of<prov.User>(context, listen: false).setEndNumber(number);
 }
 
+deleteTest(uid, docid) async {
+  try {
+    await FirebaseFirestore.instance.collection(uid).doc(docid).delete();
+    return 'success';
+  } catch (e) {
+    print(e);
+    return 'error';
+  }
+}
+
 class TestWidget extends ListTile {
   //TODO: better fields along
   String uid;
@@ -86,15 +96,76 @@ class TestWidget extends ListTile {
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
-    return ListTile(
-      onTap: () async {
-        provideTestDocID(context, doc_id);
-        provideEndNumber(context, _endNumber);
-        Navigator.pushNamed(context, 'test_info');
+    return Dismissible(
+      background: Container(
+        alignment: Alignment.centerRight,
+        color: Color.fromRGBO(69, 123, 157, 1.0),
+        child: const Icon(
+          Icons.delete,
+          size: 40.0,
+          color: Color.fromRGBO(230, 57, 70, 1.0),
+        ),
+      ),
+      key: Key(doc_id),
+      direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Delete $_class ?'),
+                content: Text('You won\'t be able to undo this action'),
+                actions: [
+                  TextButton(
+                    onPressed: () async {
+                      var res = await deleteTest(uid, doc_id);
+                      if (res == 'success') {
+                        print('test successfuly deleted');
+                      }
+                      Navigator.of(context).pop(true);
+                    },
+                    child: const Text('Yes'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child: const Text('no'),
+                  )
+                ],
+              );
+            });
       },
-      title: Text(this._coursename),
-      subtitle: Text(this._coursecode),
-      trailing: Text(this._class), //TODO: string parse
+      child: ListTile(
+        onTap: () async {
+          provideTestDocID(context, doc_id);
+          provideEndNumber(context, _endNumber);
+          Navigator.pushNamed(context, 'test_info');
+        },
+        title: Text(
+          this._coursename,
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w900,
+            fontFamily: 'Orbitron',
+            color: Color.fromRGBO(241, 250, 238, 1.0),
+          ),
+        ),
+        subtitle: Text(this._coursecode,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w100,
+              fontFamily: 'Orbitron',
+              color: Color.fromRGBO(241, 250, 238, 1.0),
+            )),
+        trailing: Text(this._class,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w100,
+              fontFamily: 'Orbitron',
+              color: Color.fromRGBO(241, 250, 238, 1.0),
+            )), //TODO: string parse
+      ),
     );
   }
 }
