@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //import '../../dummyData/testCreated.dart' as dummies;
 import 'package:provider/provider.dart';
 import '../../providerclasses/providerclasses.dart' as prov;
+import '../datas.dart';
 
 class listOfCreatedTests extends StatelessWidget {
   listOfCreatedTests();
@@ -100,11 +101,7 @@ class TestWidget extends ListTile {
       background: Container(
         alignment: Alignment.centerRight,
         color: Color.fromRGBO(69, 123, 157, 1.0),
-        child: const Icon(
-          Icons.delete,
-          size: 40.0,
-          color: Color.fromRGBO(230, 57, 70, 1.0),
-        ),
+        child: Image.asset('assets/createtest/icons8-delete-100.png'),
       ),
       key: Key(doc_id),
       direction: DismissDirection.endToStart,
@@ -140,6 +137,7 @@ class TestWidget extends ListTile {
         onTap: () async {
           provideTestDocID(context, doc_id);
           provideEndNumber(context, _endNumber);
+          generateCSV(uid, doc_id, _coursecode);
           Navigator.pushNamed(context, 'test_info');
         },
         title: Text(

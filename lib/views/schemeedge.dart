@@ -95,7 +95,7 @@ class _SchemeEdgeState extends State<SchemeEdge> {
       children: [
         Expanded(
           child: Container(
-            color: Colors.amberAccent,
+            color: Color.fromRGBO(241, 250, 238, 1.0),
             child: FadeInImage(
               placeholder: AssetImage('assets/testplaceholderimage.jpg'),
               //image: NetworkImage('https://picsum.photos/250?image=9'),
