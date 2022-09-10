@@ -18,6 +18,7 @@ class TestInfo extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           shadowColor: Color.fromRGBO(69, 123, 157, 1.0),
           backgroundColor: Color.fromRGBO(29, 53, 87, 1.0),
           automaticallyImplyLeading: false,
@@ -68,7 +69,10 @@ class TestInfo extends StatelessWidget {
         body: TabBarView(
           children: [
             SchemeEdge(),
-            StudentsSummary(),
+            Container(
+              color: Color.fromRGBO(241, 250, 238, 1.0),
+              child: StudentsSummary(),
+            ),
             Container(
               color: Color.fromRGBO(241, 250, 238, 1.0),
             )

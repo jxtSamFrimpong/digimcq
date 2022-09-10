@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providerclasses/providerclasses.dart' as prov;
 import '../datas.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class listOfCreatedTests extends StatelessWidget {
   listOfCreatedTests();
@@ -41,7 +42,12 @@ class listOfCreatedTests extends StatelessWidget {
           return const Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading");
+          return Center(
+            child: LoadingAnimationWidget.newtonCradle(
+              color: Color.fromRGBO(29, 53, 87, 1.0),
+              size: 200,
+            ),
+          );
         }
         return ListView(
           shrinkWrap: true,
@@ -101,7 +107,11 @@ class TestWidget extends ListTile {
       background: Container(
         alignment: Alignment.centerRight,
         color: Color.fromRGBO(69, 123, 157, 1.0),
-        child: Image.asset('assets/createtest/icons8-delete-100.png'),
+        child: SizedBox(
+          //width: 40.0,
+          height: 50.0,
+          child: Image.asset('assets/createtest/icons8-delete-100.png'),
+        ),
       ),
       key: Key(doc_id),
       direction: DismissDirection.endToStart,

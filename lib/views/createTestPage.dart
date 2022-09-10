@@ -82,39 +82,80 @@ class CreateTestPage extends StatelessWidget {
 
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Create Test"),
-      content: ListView(
-        children: [
-          TextField(
-            controller: _name,
-            // keyboardType: TextInputType.,
-            decoration: InputDecoration(
-                labelText: 'Test Name', hintText: 'Enter Name of Test'),
-          ),
-          TextField(
-            controller: _code,
-            decoration: InputDecoration(
-                labelText: 'Course Code', hintText: 'Enter Course Code'),
-          ),
-          TextField(
-            controller: _class,
-            decoration: InputDecoration(
-                labelText: 'Class', hintText: 'Eg. Computer Engineering 4'),
-          ),
-          TextField(
-            controller: _endNumber,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+      backgroundColor: Color.fromRGBO(241, 250, 238, 1.0),
+      title: Text(
+        "Create Test",
+        style: TextStyle(
+          fontFamily: 'Orbitron',
+          fontWeight: FontWeight.bold,
+          color: Color.fromRGBO(29, 53, 87, 1.0),
+        ),
+      ),
+      content: Container(
+        height: MediaQuery.of(context).size.height * 0.5,
+        //color: Color.fromRGBO(241, 250, 238, 1.0),
+        child: ListView(
+          children: [
+            TextField(
+              controller: _name,
+              // keyboardType: TextInputType.,
+              decoration: InputDecoration(
+                labelText: 'Test Name',
+                hintText: 'Enter Name of Test',
+                labelStyle: TextStyle(
+                  fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              ),
+              enableInteractiveSelection: true,
+            ),
+            TextField(
+              controller: _code,
+              decoration: InputDecoration(
+                labelText: 'Course Code',
+                hintText: 'Enter Course Code',
+                labelStyle: TextStyle(
+                  fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              ),
+            ),
+            TextField(
+              controller: _class,
+              decoration: InputDecoration(
+                labelText: 'Class',
+                hintText: 'Eg. Computer Engineering 4',
+                labelStyle: TextStyle(
+                  fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              ),
+            ),
+            TextField(
+              controller: _endNumber,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
                 labelText: 'Number of questions',
-                hintText: 'Eg. Computer Engineering 4'),
-          ),
-          TextField(
-            controller: _description,
-            decoration: InputDecoration(
+                hintText: 'Eg. Computer Engineering 4',
+                labelStyle: TextStyle(
+                  fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              ),
+            ),
+            TextField(
+              controller: _description,
+              decoration: InputDecoration(
                 labelText: 'Description',
-                hintText: 'Enter description of test'),
-          ),
-        ],
+                hintText: 'Enter description of test',
+                labelStyle: TextStyle(
+                  fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       actions: [
         cancelButton,
@@ -164,6 +205,7 @@ class CreateTestPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: AppBar(
+            centerTitle: true,
             iconTheme: IconThemeData(
               color: Color.fromRGBO(241, 250, 238, 1.0),
             ),

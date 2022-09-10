@@ -1,4 +1,5 @@
 import 'package:digimcq/services/markscheme.dart';
+import 'package:digimcq/utils/baseurl.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 
@@ -13,7 +14,8 @@ Future getMarkScript(
   Response response;
   var dio = Dio();
 
-  String BASE_URL = 'http://52.188.132.234:8080/mark_scheme';
+  //String BASE_URL = 'http://52.188.132.234:8080/mark_scheme';
+  String url = BASE_URL + 'mark_scheme';
 
   var params = {
     "file_id": file_id,
@@ -23,7 +25,7 @@ Future getMarkScript(
     "mark_scheme": mark_scheme
   };
 
-  response = await dio.post(BASE_URL, data: jsonEncode(params));
+  response = await dio.post(url, data: jsonEncode(params));
   // if (response.statusCode == 200) {
   //   return response.data;
   // } else {

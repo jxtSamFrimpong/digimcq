@@ -3,7 +3,7 @@
 //     final markScheme = markSchemeFromJson(jsonString);
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../utils/baseurl.dart';
+//import '../utils/baseurl.dart';
 import 'package:dio/dio.dart';
 
 MarkScheme markSchemeFromJson(String str) =>
@@ -74,7 +74,7 @@ Future getMarkScheme(String file_id, String test_id, int endNumber) async {
   Response response;
   var dio = Dio();
 
-  String BASE_URL = 'http://52.188.132.234:8080/mark_scheme';
+  String BASE_URL = 'http://52.191.95.77:8080/mark_scheme';
 
   var params = {
     "file_id": file_id,

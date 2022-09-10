@@ -52,8 +52,7 @@ class Data {
 Future sendFileGetID(file_path) async {
   var url = BASE_URL + "teleStorageGetFileID";
 
-  var request = http.MultipartRequest(
-      'POST', Uri.parse('http://52.188.132.234:8080/teleStorageGetFileID'));
+  var request = http.MultipartRequest('POST', Uri.parse(url));
   request.files.add(await http.MultipartFile.fromPath('file', file_path));
 
   http.StreamedResponse response = await request.send();

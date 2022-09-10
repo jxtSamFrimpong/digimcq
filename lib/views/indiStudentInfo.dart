@@ -21,7 +21,7 @@ class IndividualStudentInfo extends StatelessWidget {
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
     var _studentDocID = Provider.of<prov.User>(context).getStudentDocID;
-    var appName = Provider.of<prov.User>(context).getUserCredentials;
+    //var appName = Provider.of<prov.User>(context).getUserCredentials;
 
     final Stream<DocumentSnapshot> _testsStream = FirebaseFirestore.instance
         .collection(_cred.uid.toString())
@@ -48,74 +48,14 @@ class IndividualStudentInfo extends StatelessWidget {
             //   onPressed: () {},
             // ),
             title: Text(
-              "$appName",
-              style: TextStyle(color: Colors.black),
+              "MCQ GRADER",
+              style: TextStyle(
+                fontFamily: 'Rampart_One',
+                color: Color.fromRGBO(241, 250, 238, 1.0),
+              ),
             ),
             actions: [],
           ),
-        ),
-      ),
-      drawer: Drawer(
-        child: Column(
-          // Important: Remove any padding from the ListView.
-          //padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text(_cred.displayName.toString()),
-              accountEmail: Text(_cred.email),
-              currentAccountPicture: CircleAvatar(
-                //backgroundColor: Colors.orange,
-                backgroundImage:
-                    provProfPic(NetworkImage(_cred.photoURL.toString())),
-                onBackgroundImageError: (exception, stackTrace) {},
-
-                // FadeInImage(
-                //   placeholder: AssetImage('assets/user.png'),
-                //   image: NetworkImage(
-                //     _cred.photoURL.toString(),
-                //   ),
-                // ),
-                // foregroundImage:
-                //     provProfPic(AssetImage('assets/drawer/user.png')),
-                //child: ,
-                //),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text("Home"),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text("Settings"),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.contacts),
-              title: Text("About App"),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            Expanded(
-              child: Container(),
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text("Log Out"),
-              onTap: () {
-                //signOutprov(context);
-                AuthService().signOut();
-
-                //Navigator.pop(context);
-              },
-            ),
-          ],
         ),
       ),
       body: StreamBuilder(

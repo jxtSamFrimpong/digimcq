@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providerclasses/providerclasses.dart' as prov;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class StudentsSummary extends StatelessWidget {
   //StudentsSummary({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class StudentsSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
+    var _student_idx = Provider.of<prov.User>(context).getStudentDocID;
 
     final Stream<QuerySnapshot> _testsStream = FirebaseFirestore.instance
         .collection(_cred!.uid)
@@ -32,7 +34,12 @@ class StudentsSummary extends StatelessWidget {
             return const Text('Something went wrong');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return Center(
+              child: LoadingAnimationWidget.newtonCradle(
+                color: Color.fromRGBO(29, 53, 87, 1.0),
+                size: 200,
+              ),
+            );
           }
           return ListView(
             shrinkWrap: true,
@@ -41,9 +48,11 @@ class StudentsSummary extends StatelessWidget {
                   document.data()! as Map<String, dynamic>;
               return ListTile(
                 title: Text(data['student_idx'].toString()),
-                trailing: Text(data['got_marks'].toString()),
+                subtitle: Text(data['got_marks'].toString()),
+                trailing: Text(data['percentage'].toString()),
                 onTap: () {
                   provideStudentDocID(context, data['student_idx']);
+                  print(_student_idx);
                   Navigator.pushNamed(context, 'individual');
                 },
               );
@@ -67,4 +76,28 @@ class StudentsSummary extends StatelessWidget {
 
 void provideStudentDocID(BuildContext context, id) {
   Provider.of<prov.User>(context, listen: false).setStudentDocId(id);
+}
+
+// class StudentTiles extends Widget {
+//   var _uid;
+//   var _doc_id;
+//   var _student_id;
+
+//   return Container();
+
+// }
+
+deleteStudent(uid, doc_id, stdid) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection(uid)
+        .doc(doc_id)
+        .collection('students')
+        .doc(stdid)
+        .delete();
+    return 'success';
+  } catch (e) {
+    print(e);
+    return 'error';
+  }
 }
