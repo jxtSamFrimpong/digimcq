@@ -10,6 +10,9 @@ import 'schemeedge.dart';
 class TestInfo extends StatelessWidget {
   TestInfo();
 
+//Color.fromRGBO(29, 53, 87, 1.0)
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -17,9 +20,14 @@ class TestInfo extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text('APP_NAME'),
+          title: Text("MCQ GRADER",
+              style: TextStyle(
+                fontFamily: 'Rampart_One',
+                color: Color.fromRGBO(241, 250, 238, 1.0),
+              ),),
           bottom: TabBar(tabs: [
             Tab(
+              
               child: Center(
                 child: Text('Marking'),
               ),

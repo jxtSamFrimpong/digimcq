@@ -113,7 +113,7 @@ class TestWidget extends ListTile {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text('Delete $_class ?'),
+                title: Text('Delete $_coursecode ?'),
                 content: Text('You won\'t be able to undo this action'),
                 actions: [
                   TextButton(
@@ -148,7 +148,7 @@ class TestWidget extends ListTile {
             fontSize: 17,
             fontWeight: FontWeight.w900,
             fontFamily: 'Orbitron',
-            color: Color.fromRGBO(241, 250, 238, 1.0),
+            color: Color.fromRGBO(69, 123, 157, 1.0),
           ),
         ),
         subtitle: Text(this._coursecode,
@@ -156,14 +156,14 @@ class TestWidget extends ListTile {
               fontSize: 10,
               fontWeight: FontWeight.w100,
               fontFamily: 'Orbitron',
-              color: Color.fromRGBO(241, 250, 238, 1.0),
+              color: Color.fromRGBO(69, 123, 157, 1.0),
             )),
         trailing: Text(this._class,
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w100,
               fontFamily: 'Orbitron',
-              color: Color.fromRGBO(241, 250, 238, 1.0),
+              color: Color.fromRGBO(69, 123, 157, 1.0),
             )), //TODO: string parse
       ),
     );
