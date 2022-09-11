@@ -1,8 +1,10 @@
+import 'package:digimcq/services/markscheme.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/src/foundation/key.dart';
 
 import 'microwidgets/appBarWidget.dart';
+import 'datas.dart';
 import 'package:flutter/material.dart';
 import 'studentSummary.dart';
 import 'schemeedge.dart';
@@ -75,6 +77,7 @@ class TestInfo extends StatelessWidget {
             ),
             Container(
               color: Color.fromRGBO(241, 250, 238, 1.0),
+              child: DataS(),
             )
           ],
         ),

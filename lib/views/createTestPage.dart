@@ -10,7 +10,7 @@ import '../views/microwidgets/listOfCreatedTests.dart';
 import 'microwidgets/addTestMicro.dart';
 import '../utils/authservice.dart';
 import 'microwidgets/appBarWidget.dart';
-import 'datas.dart';
+//import 'datas.dart';
 
 class CreateTestPage extends StatelessWidget {
   //CreateTestPage();
@@ -41,7 +41,13 @@ class CreateTestPage extends StatelessWidget {
     TextEditingController _endNumber = TextEditingController();
 
     Widget cancelButton = MaterialButton(
-      child: Text('Cancel'),
+      child: Text(
+        'Cancel',
+        style: TextStyle(
+          fontFamily: 'Orbitron',
+          color: Color.fromRGBO(29, 53, 87, 1.0),
+        ),
+      ),
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -49,7 +55,13 @@ class CreateTestPage extends StatelessWidget {
 
     // Create button
     Widget okButton = ElevatedButton(
-      child: Text("OK"),
+      child: Text(
+        "OK",
+        style: TextStyle(
+          fontFamily: 'Orbitron',
+          color: Color.fromRGBO(29, 53, 87, 1.0),
+        ),
+      ),
       onPressed: () async {
         //TODO
         //Sub,it details to firebase and create test

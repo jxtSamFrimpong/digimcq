@@ -16,3 +16,14 @@ generateCSV(uid, test_doc_id, c_code) async {
     print(e);
   }
 }
+
+class DataS extends StatelessWidget {
+  const DataS({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print('datassss');
+    generateCSV();
+    return Container();
+  }
+}
