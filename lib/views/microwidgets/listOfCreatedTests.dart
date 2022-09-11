@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 //import '../../dummyData/testCreated.dart' as dummies;
 import 'package:provider/provider.dart';
 import '../../providerclasses/providerclasses.dart' as prov;
-import '../datas.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class listOfCreatedTests extends StatelessWidget {
@@ -147,7 +146,6 @@ class TestWidget extends ListTile {
         onTap: () async {
           provideTestDocID(context, doc_id);
           provideEndNumber(context, _endNumber);
-          generateCSV(uid, doc_id, _coursecode);
           Navigator.pushNamed(context, 'test_info');
         },
         title: Text(
