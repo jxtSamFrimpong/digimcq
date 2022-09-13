@@ -20,6 +20,8 @@ class User extends ChangeNotifier {
   var _endNumber;
   var _appName = 'mcq grader';
   var _testName;
+  var _code;
+  var _class;
 
   get getAppName {
     return _appName;
@@ -80,6 +82,30 @@ class User extends ChangeNotifier {
 
   void setTestName(name) {
     this._testName = name;
+    notifyListeners();
+  }
+
+  get getCode {
+    if (_code == null) {
+      return '';
+    }
+    return _code;
+  }
+
+  void setCode(code) {
+    this._code = code;
+    notifyListeners();
+  }
+
+  get getClass {
+    if (_class == null) {
+      return '';
+    }
+    return _user_credentials;
+  }
+
+  void setClass(cred) {
+    this._class = cred;
     notifyListeners();
   }
 }

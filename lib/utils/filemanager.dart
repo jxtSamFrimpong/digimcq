@@ -29,9 +29,9 @@ class FileManager {
     return _myList;
   }
 
-  saveDataToJSON() async {
-    var _myStudentsData = json.encode(generateStudentData(
-        [])); //the array is to be replaced by data in snapshots
+  saveDataToJSON(snapshot_lists) async {
+    var _myStudentsData = json.encode(
+        snapshot_lists); //the array is to be replaced by data in snapshots
     try {
       final directory = await getApplicationDocumentsDirectory();
       //print(directory.path);
@@ -64,10 +64,11 @@ class FileManager {
         final File file = File('${directory.path}/${test_doc_id}.csv');
         await file.writeAsString(
             "\r\n" +
-                "${snapshot_lists[i]["student_index"]}, ${snapshot_lists[i]["score"]}, ${snapshot_lists[i]["percentage"]}, ${snapshot_lists[i]["out_of"]}, ${snapshot_lists[i]["grade"]}",
+                "${snapshot_lists[i]["student_idx"]}, ${snapshot_lists[i]["score"]}, ${snapshot_lists[i]["percentage"]}, ${snapshot_lists[i]["out_of"]}, ${snapshot_lists[i]["grade"]}",
             mode: FileMode.append);
         print('conts');
       } catch (e) {
+        print('saving to csv error');
         print(e);
       }
     }
@@ -94,10 +95,11 @@ class FileManager {
         final File file = File('${directory.path}/${test_doc_id}.txt');
         await file.writeAsString(
             "\r\n" +
-                "${snapshot_lists[i]["student_index"]}, ${snapshot_lists[i]["score"]}, ${snapshot_lists[i]["percentage"]}, ${snapshot_lists[i]["out_of"]}, ${snapshot_lists[i]["grade"]}",
+                "${snapshot_lists[i]["student_idx"]}, ${snapshot_lists[i]["score"]}, ${snapshot_lists[i]["percentage"]}, ${snapshot_lists[i]["out_of"]}, ${snapshot_lists[i]["grade"]}",
             mode: FileMode.append);
         print('conts');
       } catch (e) {
+        print('saving to txt error');
         print(e);
       }
     }
