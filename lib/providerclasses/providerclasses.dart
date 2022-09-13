@@ -22,6 +22,7 @@ class User extends ChangeNotifier {
   var _testName;
   var _code;
   var _class;
+  var _chosenStudent;
 
   get getAppName {
     return _appName;
@@ -106,6 +107,18 @@ class User extends ChangeNotifier {
 
   void setClass(cred) {
     this._class = cred;
+    notifyListeners();
+  }
+
+  get getChosenStudent {
+    if (_chosenStudent == null) {
+      return;
+    }
+    return _chosenStudent;
+  }
+
+  void setChosenStudent(cred) {
+    this._chosenStudent = cred;
     notifyListeners();
   }
 }
