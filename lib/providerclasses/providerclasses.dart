@@ -19,8 +19,9 @@ class User extends ChangeNotifier {
   var _student_doc_id;
   var _endNumber;
   var _appName = 'mcq grader';
+  var _testName;
 
-  get getAppName{
+  get getAppName {
     return _appName;
   }
 
@@ -66,6 +67,19 @@ class User extends ChangeNotifier {
 
   setEndNumber(val) {
     this._endNumber = val;
+    notifyListeners();
+  }
+
+  get getTestName {
+    if (this._testName != null) {
+      return _testName;
+    } else {
+      return '';
+    }
+  }
+
+  void setTestName(name) {
+    this._testName = name;
     notifyListeners();
   }
 }

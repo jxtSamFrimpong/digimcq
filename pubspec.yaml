@@ -98,6 +98,9 @@ flutter:
       - assets/createtest/icons8-delete-100.png
       - assets/createtest/data-sheet-512.png
       - assets/launcher/launcher.drawioCirc.png
+      - assets/datas/icons8-csv-50.png
+      - assets/datas/icons8-json-50.png
+      - assets/datas/icons8-txt-50.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

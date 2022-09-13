@@ -22,6 +22,7 @@ import 'providerclasses/providerclasses.dart';
 import 'views/schemeedge.dart';
 import 'views/login.dart';
 import 'utils/authservice.dart';
+import 'views/profile.dart';
 import 'scandy/apirelearn.dart';
 
 void main() async {
@@ -53,7 +54,9 @@ class MyApp extends StatelessWidget {
             'home': (context) => MyHomePage(),
             'test_info': (context) => TestInfo(),
             'student_summeary': (context) => StudentsSummary(),
-            'individual': (context) => IndividualStudentInfo()
+            'individual': (context) => IndividualStudentInfo(),
+            'profile': (context) => ProfilePage(),
+            'createtest': (context) => CreateTestPage()
           },
           theme: ThemeData(
             // This is the theme of your application.
@@ -86,40 +89,40 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class ProviderTrial extends StatelessWidget {
-  void _incrementCounter(BuildContext context) {
-    Provider.of<Counter>(context, listen: false).incrementCounter();
-  }
+// class ProviderTrial extends StatelessWidget {
+//   void _incrementCounter(BuildContext context) {
+//     Provider.of<Counter>(context, listen: false).incrementCounter();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    var _counter = Provider.of<Counter>(context).getCounter;
+//   @override
+//   Widget build(BuildContext context) {
+//     var _counter = Provider.of<Counter>(context).getCounter;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Provider trial'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _incrementCounter(context);
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-}
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Provider trial'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             Text(
+//               'You have pushed the button this many times:',
+//             ),
+//             Text(
+//               '$_counter',
+//               style: Theme.of(context).textTheme.headline4,
+//             ),
+//           ],
+//         ),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () {
+//           _incrementCounter(context);
+//         },
+//         tooltip: 'Increment',
+//         child: Icon(Icons.add),
+//       ),
+//     );
+//   }
+// }

@@ -48,8 +48,8 @@ class StudentsSummary extends StatelessWidget {
                   document.data()! as Map<String, dynamic>;
               return ListTile(
                 title: Text(data['student_idx'].toString()),
-                subtitle: Text('Score'+data['got_marks'].toString()),
-                trailing: Text(data['percentage'].toString()+'%'),
+                subtitle: Text('Score: ' + data['got_marks'].toString()),
+                trailing: Text(data['percentage'].toStringAsFixed(2) + '%'),
                 onTap: () {
                   provideStudentDocID(context, data['student_idx']);
                   print(_student_idx);
