@@ -76,14 +76,13 @@ Future<List> generateStudentsData(uid, test_doc_id) async {
   return myList;
 }
 
-class DataS extends StatefulWidget {
-  const DataS({Key? key}) : super(key: key);
-
-  @override
-  State<DataS> createState() => _DataSState();
+studentsDataFunc(uid, test) async {
+  return await generateStudentsData(uid, test);
 }
 
-class _DataSState extends State<DataS> {
+class DataS extends StatelessWidget {
+  const DataS({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
@@ -93,16 +92,8 @@ class _DataSState extends State<DataS> {
     var _testCode = Provider.of<prov.User>(context).getCode;
 
     print('datassss');
-
-    List snapshot_lists;
-    //print(snapshot_lists);
-
-    @override
-    void initState() async {
-      super.initState();
-      snapshot_lists = await generateStudentsData(_cred.uid, _testDocID);
-    }
-
+    List snapshot_lists = studentsDataFunc(_cred.uid, _testDocID);
+    print(snapshot_lists);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
