@@ -10,6 +10,7 @@ import 'dart:io';
 
 //Flutter pub.dev packages
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 //My modular imports
 import 'package:digimcq/views/studentSummary.dart';
@@ -26,7 +27,9 @@ import 'scandy/apirelearn.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }

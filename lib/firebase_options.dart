@@ -52,6 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '604397227822',
     projectId: 'digimcq',
     authDomain: 'digimcq.firebaseapp.com',
+    databaseURL: 'https://digimcq-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'digimcq.appspot.com',
     measurementId: 'G-RNC69D1QJ6',
   );
@@ -61,6 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:604397227822:android:269394b07a95051ba334bf',
     messagingSenderId: '604397227822',
     projectId: 'digimcq',
+    databaseURL: 'https://digimcq-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'digimcq.appspot.com',
   );
 
@@ -69,7 +71,9 @@ class DefaultFirebaseOptions {
     appId: '1:604397227822:ios:e3be37f8d4ebf9dda334bf',
     messagingSenderId: '604397227822',
     projectId: 'digimcq',
+    databaseURL: 'https://digimcq-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'digimcq.appspot.com',
+    androidClientId: '604397227822-k5qkqqlaek55mhtrl9nkf3uv2973fstk.apps.googleusercontent.com',
     iosClientId: '604397227822-vv98oaseibs9u2b6a9hoo94ppoie3e8l.apps.googleusercontent.com',
     iosBundleId: 'com.example.digimcq',
   );
