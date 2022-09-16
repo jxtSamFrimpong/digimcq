@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import '../providerclasses/providerclasses.dart' as prov;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
   //handleAuthstate
@@ -50,5 +51,12 @@ class AuthService {
   //signout
   signOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  deleteUser() async {
+    var user = await FirebaseAuth.instance.currentUser;
+    var uid = user!.uid;
+    await user!.delete();
+    await FirebaseFirestore.instance.collection(uid).doc().delete();
   }
 }

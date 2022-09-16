@@ -259,6 +259,9 @@ class CreateTestPage extends StatelessWidget {
             //padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
+                onDetailsPressed: () {
+                  Navigator.pushNamed(context, 'profile');
+                },
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(29, 53, 87, 1.0),
                   //color: Color.fromRGBO(69, 123, 157, 1.0),
@@ -350,7 +353,7 @@ class CreateTestPage extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, 'about');
                 },
               ),
               Expanded(

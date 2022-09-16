@@ -49,6 +49,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+3
   path_provider: ^2.0.11
   share_plus: ^4.1.0
+  flutter_native_splash: ^2.2.9
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,9 @@ dev_dependencies:
   json_serializable: ^6.3.1
   animated_text_kit: ^4.2.2
   flutter_launcher_icons: "^0.10.0"
+  modal_bottom_sheet: ^2.1.2
+  introduction_screen: ^3.0.1
+  shared_preferences: ^2.0.15
 
 flutter_icons:
   android: "launcher_icon"
@@ -92,6 +96,7 @@ flutter:
       - assets/testplaceholderimage.jpg
       - assets/user.png
       - assets/login/layered-waves-haikei.png
+      - assets/login/splash.drawio.png
       - assets/drawer/user.png
       - assets/login/icons8-google-64.png
       - assets/login/data-sheet-256.png
@@ -100,6 +105,14 @@ flutter:
       - assets/createtest/icons8-delete-100.png
       - assets/createtest/data-sheet-512.png
       - assets/launcher/launcher.drawioCirc.png
+      - assets/launcher/int0.drawio.png
+      - assets/launcher/int1.drawio.png
+      - assets/launcher/int2.drawio.png
+      - assets/launcher/int3.drawio.png
+      - assets/launcher/int4.drawio.png
+      - assets/datas/icons8-csv-50.png
+      - assets/datas/icons8-json-50.png
+      - assets/datas/icons8-txt-50.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -127,3 +140,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_native_splash:
+  background_image: "assets/login/splash.drawio.png"
+  # android_12:
+  #   image: assets/login/splash.drawio.png

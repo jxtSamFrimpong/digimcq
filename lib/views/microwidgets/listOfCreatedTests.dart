@@ -75,6 +75,18 @@ void provideEndNumber(BuildContext context, number) {
   Provider.of<prov.User>(context, listen: false).setEndNumber(number);
 }
 
+void provideTestName(BuildContext context, name) {
+  Provider.of<prov.User>(context, listen: false).setTestName(name);
+}
+
+void provideTestCode(BuildContext context, code) {
+  Provider.of<prov.User>(context, listen: false).setCode(code);
+}
+
+void provideClass(BuildContext context, name) {
+  Provider.of<prov.User>(context, listen: false).setClass(name);
+}
+
 deleteTest(uid, docid) async {
   try {
     await FirebaseFirestore.instance.collection(uid).doc(docid).delete();
@@ -146,6 +158,9 @@ class TestWidget extends ListTile {
         onTap: () async {
           provideTestDocID(context, doc_id);
           provideEndNumber(context, _endNumber);
+          provideTestName(context, this._coursename);
+          provideClass(context, this._class);
+          provideTestCode(context, this._coursecode);
           Navigator.pushNamed(context, 'test_info');
         },
         title: Text(

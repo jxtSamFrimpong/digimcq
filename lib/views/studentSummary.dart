@@ -47,35 +47,50 @@ class StudentsSummary extends StatelessWidget {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
               return ListTile(
-                title: Text(data['student_idx'].toString()),
-                subtitle: Text('Score'+data['got_marks'].toString()),
-                trailing: Text(data['percentage'].toString()+'%'),
+                title: Text(
+                  data['student_idx'].toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Orbitron',
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
+                subtitle: Text(
+                  'Score: ' + data['got_marks'].toString(),
+                  style: TextStyle(
+                    fontSize: 10,
+                    //fontWeight: FontWeight.w900,
+                    fontFamily: 'Orbitron',
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
+                trailing: Text(data['percentage'].toStringAsFixed(2) + '%',
+                    style: TextStyle(
+                      //fontSize: 17,
+                      //fontWeight: FontWeight.w900,
+                      //fontFamily: 'Orbitron',
+                      color: Color.fromRGBO(69, 123, 157, 1.0),
+                    )),
                 onTap: () {
                   provideStudentDocID(context, data['student_idx']);
                   print(_student_idx);
+                  provideChosenStudent(context, data);
                   Navigator.pushNamed(context, 'individual');
                 },
               );
             }).toList(),
           );
         });
-
-    // ListView.separated(
-    //     separatorBuilder: (context, index) => Divider(),
-    //     itemCount: 20,
-    //     itemBuilder: ((context, index) {
-    //       return ListTile(
-    //         title: Text('Student $index'),
-    //         onTap: () {
-    //           Navigator.pushNamed(context, 'individual');
-    //         },
-    //       );
-    //     }));
   }
 }
 
 void provideStudentDocID(BuildContext context, id) {
   Provider.of<prov.User>(context, listen: false).setStudentDocId(id);
+}
+
+void provideChosenStudent(BuildContext context, data) {
+  Provider.of<prov.User>(context, listen: false).setChosenStudent(data);
 }
 
 // class StudentTiles extends Widget {

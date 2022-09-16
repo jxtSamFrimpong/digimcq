@@ -19,8 +19,12 @@ class User extends ChangeNotifier {
   var _student_doc_id;
   var _endNumber;
   var _appName = 'mcq grader';
+  var _testName;
+  var _code;
+  var _class;
+  var _chosenStudent;
 
-  get getAppName{
+  get getAppName {
     return _appName;
   }
 
@@ -66,6 +70,55 @@ class User extends ChangeNotifier {
 
   setEndNumber(val) {
     this._endNumber = val;
+    notifyListeners();
+  }
+
+  get getTestName {
+    if (this._testName != null) {
+      return _testName;
+    } else {
+      return '';
+    }
+  }
+
+  void setTestName(name) {
+    this._testName = name;
+    notifyListeners();
+  }
+
+  get getCode {
+    if (_code == null) {
+      return '';
+    }
+    return _code;
+  }
+
+  void setCode(code) {
+    this._code = code;
+    notifyListeners();
+  }
+
+  get getClass {
+    if (_class == null) {
+      return '';
+    }
+    return _class;
+  }
+
+  void setClass(cred) {
+    this._class = cred;
+    notifyListeners();
+  }
+
+  get getChosenStudent {
+    if (_chosenStudent == null) {
+      return;
+    }
+    return _chosenStudent;
+  }
+
+  void setChosenStudent(cred) {
+    this._chosenStudent = cred;
     notifyListeners();
   }
 }
