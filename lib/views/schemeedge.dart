@@ -1,8 +1,10 @@
 import 'package:digimcq/services/markscript.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:edge_detection/edge_detection.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -114,6 +116,29 @@ class _SchemeEdgeState extends State<SchemeEdge> {
               children: [
                 MaterialButton(
                   onPressed: () async {
+                    var _prescript = await FirebaseFirestore.instance
+                        .collection(_cred.uid)
+                        .doc(_testDocID)
+                        .get();
+
+                    if (_prescript.exists) {
+                      Map<String, dynamic> data = _prescript.data()!;
+
+                      //print(data['scheme'].runtimeType);
+                      if (data['scheme'].isEmpty) {
+                        print('no scheme yet');
+                        Fluttertoast.showToast(
+                            msg: "Mark the Key before marking scripts",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Color.fromRGBO(230, 57, 70, 1.0),
+                            textColor: Color.fromRGBO(241, 250, 238, 1.0),
+                            fontSize: 16.0);
+                        return;
+                      }
+                    }
+
                     // getImage(true);
                     // uploadingData(
                     //   _cred.uid,

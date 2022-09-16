@@ -23,6 +23,7 @@ class User extends ChangeNotifier {
   var _code;
   var _class;
   var _chosenStudent;
+  var _storageImageFilePath;
 
   get getAppName {
     return _appName;
@@ -119,6 +120,18 @@ class User extends ChangeNotifier {
 
   void setChosenStudent(cred) {
     this._chosenStudent = cred;
+    notifyListeners();
+  }
+
+  get getStorageImageFilePath {
+    if (_storageImageFilePath == null) {
+      return;
+    }
+    return _storageImageFilePath;
+  }
+
+  void setStorageImageFilePath(inp) {
+    this._storageImageFilePath = inp;
     notifyListeners();
   }
 }

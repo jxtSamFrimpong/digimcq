@@ -55,6 +55,9 @@ class CreateTestPage extends StatelessWidget {
 
     // Create button
     Widget okButton = ElevatedButton(
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith(
+              (states) => Color.fromRGBO(168, 218, 220, 1.0))),
       child: Text(
         "OK",
         style: TextStyle(

@@ -7,6 +7,7 @@ import '../utils/authservice.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:dio/dio.dart';
 import '../utils/config.dart';
+import 'package:http/http.dart' as http;
 
 class IndividualStudentInfo extends StatelessWidget {
   const IndividualStudentInfo({Key? key}) : super(key: key);
@@ -26,6 +27,8 @@ class IndividualStudentInfo extends StatelessWidget {
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
     var _studentDocID = Provider.of<prov.User>(context).getStudentDocID;
+    var _storageImageFilePath =
+        Provider.of<prov.User>(context).getStorageImageFilePath;
 
     final Stream<DocumentSnapshot> _testsStream = FirebaseFirestore.instance
         .collection(_cred.uid.toString())
@@ -146,25 +149,7 @@ class IndividualStudentInfo extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.settings,
-                    color: Color.fromRGBO(69, 123, 157, 1.0),
-                  ),
-                  title: Text(
-                    "Settings",
-                    style: TextStyle(
-                      //fontSize: 25,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'Orbitron',
-                      color: Color.fromRGBO(69, 123, 157, 1.0),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.contacts,
+                    Icons.info,
                     color: Color.fromRGBO(69, 123, 157, 1.0),
                   ),
                   title: Text(
@@ -177,7 +162,7 @@ class IndividualStudentInfo extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context, 'about');
                   },
                 ),
                 Expanded(
@@ -201,129 +186,108 @@ class IndividualStudentInfo extends StatelessWidget {
                     //signOutprov(context);
                     AuthService().signOut();
 
-                    //Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, 'handleauthstate');
                   },
                 ),
               ],
             ),
           ),
         ),
-        body: indiStudentInfo(_ChosenStudent),
-        // StreamBuilder(
-        //   stream: _testsStream,
-        //   builder:
-        //       (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        //     if (snapshot.hasError) {
-        //       return const Text('Something went wrong');
-        //     }
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
-        //       return Center(
-        //         child: LoadingAnimationWidget.newtonCradle(
-        //           color: Color.fromRGBO(29, 53, 87, 1.0),
-        //           size: 200,
-        //         ),
-        //       );
-        //     }
-        //     // print(snapshot.data!);
-        // var individualStudentDoc = snapshot.data!;
-        //Text(snapshot.data!['student_idx'])
-        //     return indiStudentInfo(_ChosenStudent);
-        //   },
-        // ),
+        body: indiStudentInfo(_ChosenStudent, context, _storageImageFilePath),
       ),
     );
   }
 }
 
-filePath(file_id) async {
-  //must return filepath url
-  var i =
-      'https://api.telegram.org/bot' + token + '/getFile?file_id=' + file_id;
-  Response response;
-  var dio = Dio();
+// filePath(file_id) async {
+//   //must return filepath url
+//   var i =
+//       'https://api.telegram.org/bot' + token + '/getFile?file_id=' + file_id;
 
-  response = await dio.get(i);
-  //print(response.data['result']['file_path']);
-  //try {
-  // if (response.statusCode == 200) {
-  var pathFile;
-  if (response.statusCode == 200) {
-    if (response.data) {
-      pathFile = response.data;
-    }
-  }
-  var file_path = 'https://api.telegram.org/file/bot' +
-      token +
-      '/' +
-      pathFile['result']['file_path'];
-  print(file_path);
-  return file_path;
-  //   }
-  // } catch (e) {
-  //   print('fetch file path error');
-  //   print(e);
-  //   //return '';
-  //  }
-  // return '';
-}
+//   try {
+//     var url = Uri.parse(i);
+//     var response = await http.get(url);
+//     if (response.statusCode == 200) {
+//       var _model = pathFileFromJson(response.body);
+//       return _model;
+//     }
+//   } catch (e) {
+//     print(e.toString());
+//   }
+//   // var file_path =
+//   //     'https://api.telegram.org/file/bot' + token + '/' + pathFile.toString();
+//   // //print(file_path);
+//   // return file_path.toString();
+// }
 
 //https://api.telegram.org/file/bot<token>/<file_path>
 //BQACAgQAAxkDAAOPYx1EFtP31ogqcmCHyVcs0qIqQ8UAAlQSAAKLduhQm4nkiMbW8-opBA
 //https://api.telegram.org/bot<token>/getFile?file_id=<file_id>
-indiStudentInfo(data) {
-  var file_path = filePath(
-      'BQACAgQAAxkDAAOPYx1EFtP31ogqcmCHyVcs0qIqQ8UAAlQSAAKLduhQm4nkiMbW8-opBA');
-  print(file_path);
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-            child: Container(
-          child: Text(
-            data['student_idx'],
-            style: TextStyle(
-              fontFamily: 'Orbitron',
-              color: Color.fromRGBO(29, 53, 87, 1.0),
+indiStudentInfo(data, context, file_path) {
+  return Container(
+    color: Color.fromRGBO(241, 250, 238, 1.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+              child: Container(
+            child: Text(
+              data['student_idx'],
+              style: TextStyle(
+                //fontFamily: 'Orbitron'
+                fontSize: 20.0,
+                fontWeight: FontWeight.w900,
+                color: Color.fromRGBO(29, 53, 87, 1.0),
+              ),
             ),
+          )),
+        ),
+        Container(
+            child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                'Score: ${data["got_marks"]}',
+                style: TextStyle(
+                  //fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              ),
+              Text(
+                '${data["percentage"].toStringAsFixed(2)}%',
+                style: TextStyle(
+                  //fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              ),
+              Text(
+                'Out of: ${data["out_of"]}',
+                style: TextStyle(
+                  //fontFamily: 'Orbitron',
+                  color: Color.fromRGBO(29, 53, 87, 1.0),
+                ),
+              )
+            ],
           ),
         )),
-      ),
-      Container(
-          child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              'Score: ${data["got_marks"]}',
-              style: TextStyle(
-                //fontFamily: 'Orbitron',
-                color: Color.fromRGBO(29, 53, 87, 1.0),
-              ),
-            ),
-            Text(
-              '${data["percentage"].toStringAsFixed(2)}%',
-              style: TextStyle(
-                //fontFamily: 'Orbitron',
-                color: Color.fromRGBO(29, 53, 87, 1.0),
-              ),
-            ),
-            Text(
-              'Out of: ${data["out_of"]}',
-              style: TextStyle(
-                //fontFamily: 'Orbitron',
-                color: Color.fromRGBO(29, 53, 87, 1.0),
-              ),
-            )
-          ],
+        SizedBox(
+          height: 50.0,
         ),
-      )),
-      Container(
-        child: Image.asset('assets/login/data-sheet-256.png'),
-        //child: Image.network(file_path),
-      ),
-    ],
+        Container(
+          child: Expanded(
+              child: Image.network(
+            file_path,
+            fit: BoxFit.fill,
+          )),
+        ),
+        SizedBox(
+          height: 30.0,
+        ),
+      ],
+    ),
   );
 }
 
