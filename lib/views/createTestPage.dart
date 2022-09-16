@@ -340,7 +340,7 @@ class CreateTestPage extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.contacts,
+                  Icons.info,
                   color: Color.fromRGBO(69, 123, 157, 1.0),
                 ),
                 title: Text(
@@ -377,7 +377,7 @@ class CreateTestPage extends StatelessWidget {
                   //signOutprov(context);
                   AuthService().signOut();
 
-                  //Navigator.pop(context);
+                  Navigator.pushReplacementNamed(context, 'handleauthstate');
                 },
               ),
             ],

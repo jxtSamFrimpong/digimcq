@@ -56,7 +56,11 @@ class AuthService {
   deleteUser() async {
     var user = await FirebaseAuth.instance.currentUser;
     var uid = user!.uid;
-    await user!.delete();
-    await FirebaseFirestore.instance.collection(uid).doc().delete();
+    await user.delete();
+    var collection = await FirebaseFirestore.instance.collection(uid);
+    var snapshots = await collection.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
   }
 }
