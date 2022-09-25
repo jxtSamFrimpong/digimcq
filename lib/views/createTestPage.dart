@@ -323,24 +323,24 @@ class CreateTestPage extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.settings,
-                  color: Color.fromRGBO(69, 123, 157, 1.0),
-                ),
-                title: Text(
-                  "Settings",
-                  style: TextStyle(
-                    //fontSize: 25,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'Orbitron',
-                    color: Color.fromRGBO(69, 123, 157, 1.0),
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(
+              //     Icons.settings,
+              //     color: Color.fromRGBO(69, 123, 157, 1.0),
+              //   ),
+              //   title: Text(
+              //     "Settings",
+              //     style: TextStyle(
+              //       //fontSize: 25,
+              //       fontWeight: FontWeight.w900,
+              //       fontFamily: 'Orbitron',
+              //       color: Color.fromRGBO(69, 123, 157, 1.0),
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
               ListTile(
                 leading: Icon(
                   Icons.info,
@@ -356,7 +356,7 @@ class CreateTestPage extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, 'about');
+                  Navigator.pushReplacementNamed(context, 'about');
                 },
               ),
               Expanded(

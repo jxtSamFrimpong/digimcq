@@ -99,6 +99,53 @@ class StudentsSummary extends StatelessWidget {
                   Navigator.pushNamed(context, 'individual');
                 },
               );
+
+              // Dismissible(
+              //   background: Container(
+              //     alignment: Alignment.centerRight,
+              //     color: Color.fromRGBO(69, 123, 157, 1.0),
+              //     child: SizedBox(
+              //       //width: 40.0,
+              //       height: 50.0,
+              //       child:
+              //           Image.asset('assets/createtest/icons8-delete-100.png'),
+              //     ),
+              //   ),
+              //   key: Key(data['student_idx'].toString()),
+              //   direction: DismissDirection.endToStart,
+              //   confirmDismiss: (direction) {
+              //     return showDialog(
+              //         context: context,
+              //         builder: (context) {
+              //           return AlertDialog(
+              //             title:
+              //                 Text('Delete Student ${data['student_idx']} ?'),
+              //             content:
+              //                 Text('You won\'t be able to undo this action'),
+              //             actions: [
+              //               TextButton(
+              //                 onPressed: () async {
+              //                   var res = await deleteStudent(
+              //                       _cred.uid, _testDocID, data['student_idx']);
+              //                   if (res == 'success') {
+              //                     print('test successfuly deleted');
+              //                   }
+              //                   Navigator.of(context).pop(true);
+              //                 },
+              //                 child: const Text('Yes'),
+              //               ),
+              //               TextButton(
+              //                 onPressed: () {
+              //                   Navigator.of(context).pop(false);
+              //                 },
+              //                 child: const Text('no'),
+              //               )
+              //             ],
+              //           );
+              //         });
+              //   },
+              //   child:
+              // );
             }).toList(),
           );
         });
@@ -125,21 +172,6 @@ void provideStorageImageFilePath(BuildContext context, data) {
 //   return Container();
 
 // }
-
-deleteStudent(uid, doc_id, stdid) async {
-  try {
-    await FirebaseFirestore.instance
-        .collection(uid)
-        .doc(doc_id)
-        .collection('students')
-        .doc(stdid)
-        .delete();
-    return 'success';
-  } catch (e) {
-    print(e);
-    return 'error';
-  }
-}
 
 filePath(file_id) async {
   //must return filepath url

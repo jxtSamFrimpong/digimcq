@@ -1,1 +1,1 @@
-final String BASE_URL = 'http://20.241.133.246:8080/';
+final String BASE_URL = 'http://52.226.207.122:8080/';

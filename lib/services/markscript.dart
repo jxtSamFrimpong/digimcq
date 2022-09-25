@@ -14,7 +14,7 @@ Future getMarkScript(
   Response response;
   var dio = Dio();
 
-  //String BASE_URL = 'http://20.241.133.246:8080/mark_scheme';
+  //String BASE_URL = 'http://52.226.207.122:8080/mark_scheme';
   String url = BASE_URL + 'mark_scheme';
 
   var params = {

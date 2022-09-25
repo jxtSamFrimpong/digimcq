@@ -24,7 +24,7 @@ class _SchemeEdgeState extends State<SchemeEdge> {
   //const SchemeEdge({Key? key}) : super(key: key);
   late bool markSchemePresent;
 
-  String? _lastImagePath;
+  String? _lastImagePath = '';
 
   bool? _lastImageIsAScheme;
 
@@ -34,10 +34,15 @@ class _SchemeEdgeState extends State<SchemeEdge> {
   }
 
   provideImage() {
-    if (_lastImagePath == null) {
-      return AssetImage('assets/createtest/data-sheet-512.png');
+    // if (_lastImagePath.runtimeType == null) {
+    //   return AssetImage('assets/createtest/data-sheet-512.png');
+    // } else if (_lastImagePath.runtimeType != null) {
+    //   return FileImage(File(_lastImagePath.toString()));
+    // }
+    if (_lastImagePath.toString().length > 1) {
+      return FileImage(File(_lastImagePath.toString()));
     }
-    return FileImage(File(_lastImagePath!));
+    return AssetImage('assets/createtest/data-sheet-512.png');
   }
 
   Future<String?> getImage(marking) async {
@@ -87,8 +92,10 @@ class _SchemeEdgeState extends State<SchemeEdge> {
     var _cred = Provider.of<prov.User>(context).getUserCredentials;
     var _testDocID = Provider.of<prov.User>(context).getTestDocID;
     var _endNumber = Provider.of<prov.User>(context).getEndNumber;
-    print('inside build');
-    print(_endNumber);
+    if (kDebugMode) {
+      print('inside build');
+      print(_endNumber);
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -130,7 +137,9 @@ class _SchemeEdgeState extends State<SchemeEdge> {
 
                       //print(data['scheme'].runtimeType);
                       if (data['scheme'].isEmpty) {
-                        print('no scheme yet');
+                        if (kDebugMode) {
+                          print('no scheme yet');
+                        }
                         Fluttertoast.showToast(
                             msg: "Mark the Key before marking scripts",
                             toastLength: Toast.LENGTH_LONG,
@@ -142,6 +151,8 @@ class _SchemeEdgeState extends State<SchemeEdge> {
                         return;
                       }
                     }
+
+                    //before everything went south
 
                     // getImage(true);
                     // uploadingData(
@@ -165,20 +176,26 @@ class _SchemeEdgeState extends State<SchemeEdge> {
 
                     var mark_scheme =
                         await provideMarkScheme(_cred.uid, _testDocID);
-                    print('see if test has a scheme');
-                    //print(mark_scheme);
-                    print('yeah it does');
+                    if (kDebugMode) {
+                      print('see if test has a scheme');
+                      //print(mark_scheme);
+                      print('yeah it does');
+                    }
 
                     var scriptData = await getMarkScript(file_id, _testDocID,
                         int.parse(_endNumber.toString()), mark_scheme);
 
                     try {
-                      print('try script stuff');
-                      //print(scriptData['data']['score']);
-                      //print(scriptData['data']['answers']);
-                      print('working');
+                      if (kDebugMode) {
+                        print('try script stuff');
+                        //print(scriptData['data']['score']);
+                        //print(scriptData['data']['answers']);
+                        print('working');
+                      }
                     } catch (e) {
-                      print(e);
+                      if (kDebugMode) {
+                        print(e);
+                      }
                     }
 
                     //updata or set students results to cloud
@@ -222,32 +239,48 @@ class _SchemeEdgeState extends State<SchemeEdge> {
 
                     var file_id =
                         teleStorageFromJson(jsonDecode(something)).data.fileId;
-                    //print(file_id);
+                    if (kDebugMode) {
+                      //print(file_id);
+                    }
 
                     var schemeData = await getMarkScheme(
                         file_id, _testDocID, int.parse(_endNumber.toString()));
                     // var passedScheme = markSchemeFromJson(jsonDecode(schemeData));
                     try {
-                      print('try scheme stuff');
-                      //print(schemeData['data']['scheme']);
-                      print('working');
+                      if (kDebugMode) {
+                        print('try scheme stuff');
+                        //print(schemeData['data']['scheme']);
+                        print('working');
+                      }
                     } catch (e) {
-                      print(e);
+                      if (kDebugMode) {
+                        print(e);
+                      }
                     }
-                    // print('try paased scheme stuff');
-                    // print(passedScheme.data.scheme);
+                    if (kDebugMode) {
+                      // print('try paased scheme stuff');
+                      // print(passedScheme.data.scheme);
+                    }
                     try {
-                      print('update mark scheme on firebase');
+                      if (kDebugMode) {
+                        print('update mark scheme on firebase');
+                      }
                       await uploadMarkScheme(
                           schemeData['data']['scheme'], _cred.uid, _testDocID);
-                      print('check if it really updated');
+                      if (kDebugMode) {
+                        print('check if it really updated');
+                      }
                       // var updated_mark_scheme = await FirebaseFirestore.instance
                       //     .collection(_cred.uid)
                       //     .doc(_testDocID)
                       //     .get();
-                      print('yeah it does');
+                      if (kDebugMode) {
+                        print('yeah it does');
+                      }
                     } catch (e) {
-                      print(e);
+                      if (kDebugMode) {
+                        print(e);
+                      }
                     }
                   },
                   child: Text(
@@ -275,8 +308,10 @@ Future<void> uploadingData(
   String _img_url,
   List _answers,
 ) async {
-  //print(_got_marks.runtimeType);
-  //print(_out_of.runtimeType);
+  if (kDebugMode) {
+    //print(_got_marks.runtimeType);
+    //print(_out_of.runtimeType);
+  }
   //Before firebase upload we need _img_url and _answers from our api
   double _percentage = (_got_marks.toDouble() / _out_of.toDouble()) * 100.0;
   try {
@@ -294,9 +329,13 @@ Future<void> uploadingData(
       'answers': _answers,
       'percentage': _percentage
     });
-    //print(result);
+    if (kDebugMode) {
+      //print(result);
+    }
   } catch (e) {
-    print(e);
+    if (kDebugMode) {
+      print(e);
+    }
   }
   //return result.id;
 }

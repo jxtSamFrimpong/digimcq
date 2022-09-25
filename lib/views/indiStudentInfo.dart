@@ -144,7 +144,7 @@ class IndividualStudentInfo extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, 'createtest');
                   },
                 ),
                 ListTile(
@@ -162,7 +162,7 @@ class IndividualStudentInfo extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, 'about');
+                    Navigator.pushReplacementNamed(context, 'about');
                   },
                 ),
                 Expanded(
@@ -193,7 +193,8 @@ class IndividualStudentInfo extends StatelessWidget {
             ),
           ),
         ),
-        body: indiStudentInfo(_ChosenStudent, context, _storageImageFilePath),
+        body: indiStudentInfo(_ChosenStudent, context, _storageImageFilePath,
+            _studentDocID, _cred.uid, _testDocID),
       ),
     );
   }
@@ -223,7 +224,7 @@ class IndividualStudentInfo extends StatelessWidget {
 //https://api.telegram.org/file/bot<token>/<file_path>
 //BQACAgQAAxkDAAOPYx1EFtP31ogqcmCHyVcs0qIqQ8UAAlQSAAKLduhQm4nkiMbW8-opBA
 //https://api.telegram.org/bot<token>/getFile?file_id=<file_id>
-indiStudentInfo(data, context, file_path) {
+indiStudentInfo(data, context, file_path, studentID, uid, testID) {
   return Container(
     color: Color.fromRGBO(241, 250, 238, 1.0),
     child: Column(
@@ -286,6 +287,84 @@ indiStudentInfo(data, context, file_path) {
         SizedBox(
           height: 30.0,
         ),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Center(
+            child: Container(
+              color: Color.fromRGBO(69, 123, 157, 1.0),
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: MaterialButton(
+                onPressed: () {
+                  //var deleted = false;
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor: Color.fromRGBO(241, 250, 238, 1.0),
+                          title: Text(
+                            'Delete Student ${studentID} ?',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'Orbitron',
+                              color: Color.fromRGBO(29, 53, 87, 1.0),
+                            ),
+                          ),
+                          content: Text(
+                            'You won\'t be able to undo this action',
+                            style: TextStyle(
+                              //fontFamily: 'Orbitron',
+                              color: Color.fromRGBO(69, 123, 157, 1.0),
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: const Text(
+                                'No',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateColor.resolveWith(
+                                (states) => Color.fromRGBO(230, 57, 70, 1.0),
+                              )),
+                              onPressed: () async {
+                                var res =
+                                    await deleteStudent(uid, testID, studentID);
+                                if (res == 'success') {
+                                  print('test successfuly deleted');
+                                }
+                                //deleted = true;
+                                Navigator.of(context).pop(true);
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Yes',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        );
+                      });
+                  // if (deleted) {
+                  //   Navigator.pop(context);
+                  // }
+                },
+                child: Text(
+                  'Delete Student',
+                  style: TextStyle(
+                    fontFamily: 'Orbitron',
+                    color: Color.fromRGBO(241, 250, 238, 1.0),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
       ],
     ),
   );
@@ -345,4 +424,19 @@ class Result {
         "file_size": fileSize,
         "file_path": filePath,
       };
+}
+
+deleteStudent(uid, doc_id, stdid) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection(uid)
+        .doc(doc_id)
+        .collection('students')
+        .doc(stdid)
+        .delete();
+    return 'success';
+  } catch (e) {
+    print(e);
+    return 'error';
+  }
 }
