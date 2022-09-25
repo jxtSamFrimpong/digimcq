@@ -74,7 +74,7 @@ Future getMarkScheme(String file_id, String test_id, int endNumber) async {
   Response response;
   var dio = Dio();
 
-  String BASE_URL = 'http://52.191.95.77:8080/mark_scheme';
+  String BASE_URL = 'http://20.241.133.246:8080/mark_scheme';
 
   var params = {
     "file_id": file_id,

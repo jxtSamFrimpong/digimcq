@@ -121,7 +121,11 @@ class _SchemeEdgeState extends State<SchemeEdge> {
                         .doc(_testDocID)
                         .get();
 
-                    if (_prescript.exists) {
+                    if (kDebugMode) {
+                      print(_prescript);
+                    }
+
+                    if (_prescript.id != null) {
                       Map<String, dynamic> data = _prescript.data()!;
 
                       //print(data['scheme'].runtimeType);
