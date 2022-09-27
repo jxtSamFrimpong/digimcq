@@ -328,10 +328,10 @@ indiStudentInfo(data, context, file_path, studentID, uid, testID) {
                             ),
                             TextButton(
                               style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateColor.resolveWith(
-                                (states) => Color.fromRGBO(230, 57, 70, 1.0),
-                              )),
+                                backgroundColor: MaterialStateColor.resolveWith(
+                                  (states) => Color.fromRGBO(230, 57, 70, 1.0),
+                                ),
+                              ),
                               onPressed: () async {
                                 var res =
                                     await deleteStudent(uid, testID, studentID);

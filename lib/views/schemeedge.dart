@@ -27,6 +27,7 @@ class _SchemeEdgeState extends State<SchemeEdge> {
   String? _lastImagePath = '';
 
   bool? _lastImageIsAScheme;
+  bool keyExists = false;
 
   @override
   void initState() {
@@ -39,7 +40,15 @@ class _SchemeEdgeState extends State<SchemeEdge> {
     // } else if (_lastImagePath.runtimeType != null) {
     //   return FileImage(File(_lastImagePath.toString()));
     // }
-    if (_lastImagePath.toString().length > 1) {
+    var checker = '';
+    try {
+      if (_lastImagePath!.toString().length > 5) {
+        checker = _lastImagePath.toString();
+      }
+    } catch (e) {
+      print(e);
+    }
+    if (checker.length > 5) {
       return FileImage(File(_lastImagePath.toString()));
     }
     return AssetImage('assets/createtest/data-sheet-512.png');
@@ -59,27 +68,29 @@ class _SchemeEdgeState extends State<SchemeEdge> {
       print("$imagePath" + "ok");
       return imagePath;
     } on PlatformException catch (e) {
-      imagePath = e.toString();
+      print(e.toString());
+      imagePath = 'null';
+      return imagePath;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
-    if (!mounted) {
-      if (marking) {
-        setState(() {
-          _lastImagePath = imagePath;
-        });
-      } else {
-        //async send to api and do something about it
-        //file_ids = await sendFileGetID(imagePath);
-        setState(() {
-          _lastImagePath = imagePath;
-        });
-      }
 
-      //return;
-    }
+    //MOUNT CHECK
+    // if (!mounted) {
+    //   if (marking) {
+    //     setState(() {
+    //       _lastImagePath = imagePath;
+    //     });
+    //   } else {
+    //     //async send to api and do something about it
+    //     //file_ids = await sendFileGetID(imagePath);
+    //     setState(() {
+    //       _lastImagePath = imagePath;
+    //     });
+    //   }
+    //}
 
     // setState(() {
     //   _lastImagePath = imagePath;
@@ -123,32 +134,38 @@ class _SchemeEdgeState extends State<SchemeEdge> {
               children: [
                 MaterialButton(
                   onPressed: () async {
-                    var _prescript = await FirebaseFirestore.instance
-                        .collection(_cred.uid)
-                        .doc(_testDocID)
-                        .get();
+                    if (!keyExists) {
+                      var _prescript = await FirebaseFirestore.instance
+                          .collection(_cred.uid)
+                          .doc(_testDocID)
+                          .get();
 
-                    if (kDebugMode) {
-                      print(_prescript);
-                    }
+                      if (kDebugMode) {
+                        print(_prescript);
+                      }
 
-                    if (_prescript.id != null) {
-                      Map<String, dynamic> data = _prescript.data()!;
+                      if (_prescript.id != null) {
+                        Map<String, dynamic> data = _prescript.data()!;
 
-                      //print(data['scheme'].runtimeType);
-                      if (data['scheme'].isEmpty) {
-                        if (kDebugMode) {
-                          print('no scheme yet');
+                        //print(data['scheme'].runtimeType);
+                        if (data['scheme'].isEmpty) {
+                          if (kDebugMode) {
+                            print('no scheme yet');
+                          }
+                          Fluttertoast.showToast(
+                              msg: "Mark the Key before marking scripts",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Color.fromRGBO(230, 57, 70, 1.0),
+                              textColor: Color.fromRGBO(241, 250, 238, 1.0),
+                              fontSize: 16.0);
+                          return;
+                        } else {
+                          setState(() {
+                            keyExists = true;
+                          });
                         }
-                        Fluttertoast.showToast(
-                            msg: "Mark the Key before marking scripts",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Color.fromRGBO(230, 57, 70, 1.0),
-                            textColor: Color.fromRGBO(241, 250, 238, 1.0),
-                            fontSize: 16.0);
-                        return;
                       }
                     }
 
@@ -282,6 +299,10 @@ class _SchemeEdgeState extends State<SchemeEdge> {
                         print(e);
                       }
                     }
+
+                    setState(() {
+                      keyExists = true;
+                    });
                   },
                   child: Text(
                     'Key',

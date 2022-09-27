@@ -131,9 +131,29 @@ class TestWidget extends ListTile {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text('Delete $_coursecode ?'),
-                content: Text('You won\'t be able to undo this action'),
+                backgroundColor: Color.fromRGBO(241, 250, 238, 1.0),
+                title: Text(
+                  'Delete $_coursename ?',
+                  style: TextStyle(
+                    fontFamily: 'Orbitron',
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
+                content: Text(
+                  'You won\'t be able to undo this action',
+                  style: TextStyle(
+                    color: Color.fromRGBO(69, 123, 157, 1.0),
+                  ),
+                ),
                 actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child:
+                        const Text('No', style: TextStyle(color: Colors.black)),
+                  ),
                   TextButton(
                     onPressed: () async {
                       var res = await deleteTest(uid, doc_id);
@@ -142,14 +162,14 @@ class TestWidget extends ListTile {
                       }
                       Navigator.of(context).pop(true);
                     },
-                    child: const Text('Yes'),
+                    child: const Text('Yes',
+                        style: TextStyle(color: Colors.black)),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => Color.fromRGBO(230, 57, 70, 1.0),
+                      ),
+                    ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text('no'),
-                  )
                 ],
               );
             });

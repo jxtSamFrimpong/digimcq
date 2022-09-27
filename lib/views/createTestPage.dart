@@ -116,7 +116,7 @@ class CreateTestPage extends StatelessWidget {
               // keyboardType: TextInputType.,
               decoration: InputDecoration(
                 labelText: 'Test Name',
-                hintText: 'Enter Name of Test',
+                hintText: 'E.g. digital systems',
                 labelStyle: TextStyle(
                   fontFamily: 'Orbitron',
                   color: Color.fromRGBO(29, 53, 87, 1.0),
@@ -128,7 +128,7 @@ class CreateTestPage extends StatelessWidget {
               controller: _code,
               decoration: InputDecoration(
                 labelText: 'Course Code',
-                hintText: 'Enter Course Code',
+                hintText: 'E.g. COE 419',
                 labelStyle: TextStyle(
                   fontFamily: 'Orbitron',
                   color: Color.fromRGBO(29, 53, 87, 1.0),
@@ -151,7 +151,7 @@ class CreateTestPage extends StatelessWidget {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Number of questions',
-                hintText: 'Eg. Computer Engineering 4',
+                hintText: 'Eg. 70',
                 labelStyle: TextStyle(
                   fontFamily: 'Orbitron',
                   color: Color.fromRGBO(29, 53, 87, 1.0),
@@ -162,7 +162,7 @@ class CreateTestPage extends StatelessWidget {
               controller: _description,
               decoration: InputDecoration(
                 labelText: 'Description',
-                hintText: 'Enter description of test',
+                hintText: 'E.g. midsem',
                 labelStyle: TextStyle(
                   fontFamily: 'Orbitron',
                   color: Color.fromRGBO(29, 53, 87, 1.0),
